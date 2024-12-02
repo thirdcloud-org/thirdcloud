@@ -28,7 +28,7 @@
 
 ThirdCloud helps you work smarter by bringing your tools and data together.
 
-- ☝️**One Platform**: All your tools in one place—no need to switch apps.
+- ☝️**One Platform**: All your tools in one place.
 - 🤝 **Easy Teamwork**: Collaborate smoothly across divisions.
 - 🤹 **Adaptable Workflows**: Add third-party apps to fit the way you work.
 
