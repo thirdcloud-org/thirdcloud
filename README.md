@@ -5,8 +5,8 @@
 #
 
 <p align="center">
-  All your team needs to get things done.<br>
-  ThirdCloud can be extended with third-party apps—just like VS Code!
+  Extend ThirdCloud with third-party apps
+  <br/>—just like in VS Code!
 </p>
 
 #
@@ -17,25 +17,30 @@
   <img src="/public/screenshot.png"/>
 </p>
 
+<!---
+<a href="https://example.com" target="_blank" rel="noopener noreferrer"><img src="https://cloud.githubusercontent.com/assets/4307137/10105283/251b6868-63ae-11e5-9918-b789d9d682ec.png" width="22%"></img></a>
+<a href="https://example.com" target="_blank" rel="noopener noreferrer"><img src="https://cloud.githubusercontent.com/assets/4307137/10105283/251b6868-63ae-11e5-9918-b789d9d682ec.png" width="22%"></img></a>
+<a href="https://example.com" target="_blank" rel="noopener noreferrer"><img src="https://cloud.githubusercontent.com/assets/4307137/10105283/251b6868-63ae-11e5-9918-b789d9d682ec.png" width="22%"></img></a>
+<a href="https://example.com" target="_blank" rel="noopener noreferrer"><img src="https://cloud.githubusercontent.com/assets/4307137/10105283/251b6868-63ae-11e5-9918-b789d9d682ec.png" width="22%"></img></a>
+-->
+
 ## Increase Efficiency, Reduce Costs
 
-ThirdCloud streamlines your tools and improves data flow, saving you time and resources. Say goodbye to software bloat and data silos.
+ThirdCloud helps you work smarter by bringing your tools and data together.
 
-- **Unified Platform**: All your essential tools in one place—no more switching between apps.
-- **Real-Time Collaboration**: Work with your team seamlessly, wherever they are.
-- **Flexible Workflows**: Adapt ThirdCloud to fit your team’s unique needs.
+- ☝️**One Platform**: Use all your tools in one place—no need to switch apps.
+- 🤝 **Easy Teamwork**: Collaborate smoothly, wherever your team is.
+- 🤹 **Adaptable Workflows**: Customize it to fit how your team works best.
 
-## Third-party apps
+## Third-party Apps
 
-- **Built with Familiar Technology**: Vanilla JS, React, Vite, and more. We focus on providing a great developer experience. For more information, see [Build Your First App](./docs/BUILD_YOUR_FIRST_APP.md).
-- **Battery included**: Think authentication, real-time features, data management, and caching.
+Each third-party app runs in an isolated sandbox with limited access to the DOM and Web APIs. They are given the same level of performance and accessibility as ThirdCloud itself.
 
-## Performance
-
-Third-party apps are **secured** and **lightning fast**. Each app runs in an isolated sandbox with limited access to the DOM and Web APIs. They are given the same level of performance and accessibility as ThirdCloud itself.
+- 🛠️ **Built with Familiar Technology**: Vanilla JS, React, Vite, and more. We focus on providing a great developer experience. For more information, see [Build Your First App](./docs/BUILD_YOUR_FIRST_APP.md).
+- 🔋 **Batteries included**: Built-in features like authentication, real-time updates, analytics & enterprise data models.
 
 > [!IMPORTANT]  
-> ThirdCloud is still a work in progress. The security layer is implemented but has not safeguarded all Web APIs.
+> ThirdCloud is in beta phase. The security layer has not safeguarded all Web APIs.
 
 ## Getting Started
 
