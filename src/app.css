@@ -230,7 +230,7 @@ body {
 }
 
 .tab-trigger {
-  @apply el overflow-hidden m-2 rounded-lg border cursor-pointer text-neutral-500;
+  @apply el overflow-hidden m-2 rounded-lg border cursor-pointer text-neutral-500 grayscale hover:grayscale-0 duration-150 data-[active=true]:grayscale-0;
 }
 
 .divider {
