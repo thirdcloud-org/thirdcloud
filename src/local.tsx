@@ -1,8 +1,9 @@
 import localforage from "localforage";
 
-export let local: LocalForage;
+export let cachedInstallations: LocalForage;
+
 if (typeof window !== "undefined") {
-  local = localforage.createInstance({
-    name: "ab_installations",
+  cachedInstallations = localforage.createInstance({
+    name: "host_installations",
   });
 }

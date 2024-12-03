@@ -2,15 +2,11 @@ import { ModuleSource } from "@endo/module-source";
 import { VirtualEnvironment } from "@locker/near-membrane-base";
 import "ses";
 import { createSESVirtualEnvironment } from "../ses-membrane";
-
-import {
-  getResolvePathFunction,
-  installationOf,
-  proxyFetch,
-} from "~/components/apps";
-import { transform } from "./transform";
-import { createSignal } from "solid-js";
+import { serialize } from "seroval";
+import { getResolvePathFunction, installationOf } from "~/components/apps";
 import { profile } from "~/global";
+import { transform } from "./transform";
+import { cachedModules } from "~/local";
 
 declare global {
   interface Window {
@@ -18,10 +14,30 @@ declare global {
   }
 }
 
-const createModuleSource = (specifier: string, code: string) => {
+const createModuleSource = async (specifier: string, code: string) => {
+  const cached = (await cachedModules.getItem(specifier)) as string;
+  if (cached) {
+    // console.log("hello", JSON.parse(cached));
+    return JSON.parse(cached);
+  }
+
+  const start = performance.now();
   const transformedCode = transform(specifier, code);
+
   const moduleSource = new ModuleSource(transformedCode);
-  return { moduleSource, transformedCode };
+  const result = { moduleSource, transformedCode };
+  const text = JSON.stringify(result);
+  const end = performance.now();
+  console.log(
+    `Transfoming ${specifier} took ${end - start} milliseconds`,
+    moduleSource
+  );
+
+  if (specifier.includes("node_modules")) {
+    cachedModules.setItem(specifier, text);
+  }
+
+  return result;
 };
 
 function isHTML(input: string) {
@@ -72,9 +88,15 @@ export class Sandbox {
   }
 
   async fetch(importSpecifier: string) {
+    const start = performance.now();
     if (!this.resolvePath) throw new Error("resolvePath not initialized");
     const path = this.resolvePath(importSpecifier);
-    return await proxyFetch(path);
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`Cannot fetch ${path}`);
+    const text = await response.text();
+    const end = performance.now();
+    console.log(`fetch ${importSpecifier} took ${end - start}ms`);
+    return text;
   }
 
   getCachedModule(specifier: string) {
@@ -184,7 +206,10 @@ export class Sandbox {
         const cached = this_sandbox.getCachedModule(importSpecifier);
         if (cached) return cached;
         const code = await this_sandbox.fetch(importSpecifier);
-        const { moduleSource } = createModuleSource(importSpecifier, code);
+        const { moduleSource } = await createModuleSource(
+          importSpecifier,
+          code
+        );
         return {
           source: moduleSource,
           specifier: importSpecifier,
@@ -282,8 +307,8 @@ export class Sandbox {
     });
   }
 
-  cacheModule(specifier: string, code: string) {
-    const { moduleSource } = createModuleSource(specifier, code);
+  async cacheModule(specifier: string, code: string) {
+    const { moduleSource } = await createModuleSource(specifier, code);
     this.modules.set(specifier, {
       source: moduleSource,
     });

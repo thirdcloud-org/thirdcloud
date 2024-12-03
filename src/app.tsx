@@ -17,15 +17,17 @@ import { Portal } from "solid-js/web";
 import "./app.css";
 import { transform } from "./lib/sandbox/transform";
 import { Auth } from "./components/Auth";
-import { local } from "./local";
+import { cachedInstallations } from "./local";
 import { deserialize } from "seroval";
 import { installations, setInstallations } from "./components/apps";
 
 export default function App() {
   onMount(() => {
     (async () => {
-      const keys = await local.keys();
-      const serializeds = await Promise.all(keys.map((k) => local.getItem(k)));
+      const keys = await cachedInstallations.keys();
+      const serializeds = await Promise.all(
+        keys.map((k) => cachedInstallations.getItem(k))
+      );
       const _installations = serializeds.map((s) => deserialize(s as string));
       setInstallations(_installations as any[]);
       console.log("_installations", _installations, installations());

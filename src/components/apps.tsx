@@ -3,7 +3,7 @@ import { createSignal } from "solid-js";
 import { addTask, markComplete, RunningTaskData } from "~/components/tasks";
 import { compile, CompileResult } from "~/lib/compiler";
 import { Sandbox } from "~/lib/sandbox/sanbox";
-import { local } from "~/local";
+import { cachedInstallations } from "~/local";
 import { showToast } from "~/toast";
 import Button from "./Button";
 
@@ -185,7 +185,11 @@ export const onUIReady = async (id: string, shadowRoot: ShadowRoot) => {
         sandbox.import(script.src);
       } else {
         const randomIdentifier = crypto.randomUUID();
-        sandbox.cacheModule(randomIdentifier, script.content);
+        await sandbox.createModuleSource(
+          randomIdentifier,
+          script.content,
+          true
+        );
         console.log("random import", randomIdentifier, script);
         sandbox.import(randomIdentifier);
       }
@@ -204,48 +208,6 @@ export const onUIReady = async (id: string, shadowRoot: ShadowRoot) => {
     }
   }
 };
-
-const fetchResource = async (resolvePath: ResolvePath, path: string) => {
-  const absolutePath = resolvePath(path);
-  return proxyFetch(absolutePath);
-};
-
-// const fetchResources = async (
-//   compiledResult: CompileResult,
-//   resolvePath: ResolvePath
-// ) => {
-//   const promises = [
-//     ...compiledResult.stylesheets.map(async (stylesheet) => {
-//       const value = stylesheet.href
-//         ? await fetchResource(resolvePath, stylesheet.href)
-//         : stylesheet.content;
-//       return {
-//         as: "css",
-//         value,
-//       } as Resource;
-//     }),
-
-//     ...compiledResult.scripts.map(async (script) => {
-//       let specifier = undefined;
-//       // Maybe I can use the src (assume dev server uses absolute path) as specifier?
-//       if (script.type == "module") specifier = script.src;
-//       // const value = script.src
-//       //   ? await fetchResource(resolvePath, script.src)
-//       //   : script.content;
-
-//       return {
-//         as: "js",
-//         value,
-//         type: script.type,
-//         specifier,
-//       } as Resource;
-//     }),
-//   ];
-
-//   const data = await Promise.all(promises);
-
-//   return data;
-// };
 
 export const getResolvePathFunction = (index: string) => {
   let resolvePath: ResolvePath;
@@ -294,14 +256,6 @@ export const getResolvePathFunction = (index: string) => {
   };
 };
 
-export const proxyFetch = async (url: string) => {
-  // const proxyPath = `/proxy?url=${encodeURIComponent(url)}`;
-  const proxyPath = url;
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Cannot fetch ${proxyPath}`);
-  return await response.text();
-};
-
 const fetchIndex = async (indexPath: string) => {
   const proxyPath = indexPath;
   const response = await fetch(proxyPath);
@@ -347,7 +301,7 @@ export const install = async (app: AppMeta) => {
     setInstallations([ins, ...installations()]);
     console.log("ins", ins);
     const serialized = serialize(ins);
-    await local.setItem(app.id, serialized);
+    await cachedInstallations.setItem(app.id, serialized);
   } catch (e) {
     console.error("Cannot install app", e);
     toast_err_cannot_install();
@@ -359,7 +313,7 @@ export const remove = async (app: AppMeta) => {
     ...installations().filter((installation) => installation.id != app.id),
   ]);
 
-  await local.removeItem(app.id);
+  await cachedInstallations.removeItem(app.id);
 };
 
 const set = (disabled: boolean) => async (app: AppMeta) => {
@@ -375,7 +329,7 @@ const set = (disabled: boolean) => async (app: AppMeta) => {
     newIns,
   ]);
 
-  await local.setItem(app.id, serialize(newIns));
+  await cachedInstallations.setItem(app.id, serialize(newIns));
 };
 
 export const disable = set(true);
