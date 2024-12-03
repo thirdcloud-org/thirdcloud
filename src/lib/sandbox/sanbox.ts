@@ -6,7 +6,7 @@ import { serialize } from "seroval";
 import { getResolvePathFunction, installationOf } from "~/components/apps";
 import { profile } from "~/global";
 import { transform } from "./transform";
-import { cachedModules } from "~/local";
+import localforage from "localforage";
 
 declare global {
   interface Window {
@@ -14,44 +14,7 @@ declare global {
   }
 }
 
-const createModuleSource = async (specifier: string, code: string) => {
-  const cached = (await cachedModules.getItem(specifier)) as string;
-  if (cached) {
-    // console.log("hello", JSON.parse(cached));
-    return JSON.parse(cached);
-  }
-
-  const start = performance.now();
-  const transformedCode = transform(specifier, code);
-
-  const moduleSource = new ModuleSource(transformedCode);
-  const result = { moduleSource, transformedCode };
-  const text = JSON.stringify(result);
-  const end = performance.now();
-  console.log(
-    `Transfoming ${specifier} took ${end - start} milliseconds`,
-    moduleSource
-  );
-
-  if (specifier.includes("node_modules")) {
-    cachedModules.setItem(specifier, text);
-  }
-
-  return result;
-};
-
-function isHTML(input: string) {
-  try {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(input, "text/html");
-
-    // If there are no valid nodes, it might not be HTML.
-    return doc.body.children.length > 0;
-  } catch (e) {
-    return false;
-  }
-}
-
+type CachedModule = { moduleSource: ModuleSource; transformedCode: string };
 export type Distortion = Map<any, () => any>;
 export class Sandbox {
   private shadowRoot: ShadowRoot | undefined;
@@ -60,14 +23,7 @@ export class Sandbox {
   private distortion: Distortion | undefined;
   private compartment: Compartment | undefined;
   private resolvePath: ResolvePath | undefined;
-
-  // private shadowRootProxy: ShadowRoot | undefined;
-  private modules = new Map<
-    string,
-    {
-      source?: ModuleSource;
-    }
-  >();
+  private cachedModules: LocalForage;
 
   static lockdown() {
     if (window.sesLockedDown) return;
@@ -85,6 +41,35 @@ export class Sandbox {
     }
   ) {
     Sandbox.lockdown();
+
+    this.cachedModules = localforage.createInstance({
+      name: "host_module_texts",
+    });
+  }
+
+  async getCachedModule(specifier: string) {
+    const cached = (await this.cachedModules.getItem(specifier)) as string;
+    return cached ? (JSON.parse(cached) as CachedModule) : undefined;
+  }
+
+  async createModuleSource(
+    specifier: string,
+    code: string,
+    cache: boolean
+  ): Promise<CachedModule> {
+    const start = performance.now();
+    const transformedCode = transform(specifier, code);
+    const moduleSource = new ModuleSource(transformedCode);
+    const result = { moduleSource, transformedCode };
+    const end = performance.now();
+    console.log(`Transfoming ${specifier} took ${end - start} milliseconds`);
+
+    if (cache) {
+      const text = JSON.stringify(result);
+      await this.cachedModules.setItem(specifier, text);
+    }
+
+    return result;
   }
 
   async fetch(importSpecifier: string) {
@@ -97,18 +82,6 @@ export class Sandbox {
     const end = performance.now();
     console.log(`fetch ${importSpecifier} took ${end - start}ms`);
     return text;
-  }
-
-  getCachedModule(specifier: string) {
-    const cached = this.modules.get(specifier);
-
-    if (cached) {
-      return {
-        source: cached.source,
-        specifier,
-        compartment: this.compartment, // reflexive
-      };
-    }
   }
 
   // lazily init when shadowRoot and stuffs have been all setup
@@ -130,11 +103,6 @@ export class Sandbox {
     //   console.log('URL did not match criteria for modification:', url);
     //   return fetch(url, ...args.slice(1));
     // });
-    // const source = createModuleSource(VITE_CLIENT_MJS);
-    // this.modules.set("/@vite/client", { source });
-    // this.modules.set("@vite/client", { source });
-    // this.modules.set("/src//@vite/client", { source });
-    // this.modules.set("http://localhost:5173/@vite/client", { source });
 
     const ins = installationOf(this.id);
     if (!ins) throw new Error("No installation found for " + this.id);
@@ -203,24 +171,29 @@ export class Sandbox {
         referrerSpecifier: string
       ) => {
         console.log("importHook", importSpecifier);
-        const cached = this_sandbox.getCachedModule(importSpecifier);
-        if (cached) return cached;
+        const cached = await this.getCachedModule(importSpecifier);
+        if (cached) {
+          console.log("cache hit", cached);
+          return {
+            source: cached.moduleSource,
+            specifier: importSpecifier,
+            compartment: this_sandbox.compartment,
+          };
+        }
         const code = await this_sandbox.fetch(importSpecifier);
-        const { moduleSource } = await createModuleSource(
+        const { moduleSource } = await this.createModuleSource(
           importSpecifier,
-          code
+          code,
+          importSpecifier.includes("node_modules")
         );
         return {
           source: moduleSource,
           specifier: importSpecifier,
-          compartment: this.compartment,
+          compartment: this_sandbox.compartment,
         };
       },
       importNowHook(importSpecifier: string, referrerSpecifier: string) {
-        console.log("importNowHook", importSpecifier);
-        const module = this_sandbox.fetch(importSpecifier);
-        this.modules.set(importSpecifier, module);
-        return module;
+        throw new Error("importNowHook not implemented");
       },
       /**
        * Resolve a module specifier relative to another module specifier.
@@ -307,39 +280,7 @@ export class Sandbox {
     });
   }
 
-  async cacheModule(specifier: string, code: string) {
-    const { moduleSource } = await createModuleSource(specifier, code);
-    this.modules.set(specifier, {
-      source: moduleSource,
-    });
-  }
-
-  importNow(specifier: string) {
-    // if (
-    //   specifier == "/@vite/client" ||
-    //   specifier == "/src//@vite/client" ||
-    //   specifier == "@vite/client" ||
-    //   specifier == "http://localhost:5173/@vite/client"
-    // ) {
-    //   console.warn("Skipping import of vite client");
-    //   return;
-    // }
-
-    try {
-      const compartment = this.compartment ?? this.init();
-      const namespace = compartment.importNow(specifier);
-      return namespace;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   import(specifier: string) {
-    // if (specifier == "/@vite/client" || specifier == "/src//@vite/client") {
-    //   console.warn("Skipping import of vite client");
-    //   return;
-    // }
-
     try {
       const compartment = this.compartment ?? this.init();
       const namespace = compartment.import(specifier);
@@ -465,7 +406,6 @@ export class Sandbox {
     this.compartment = undefined;
     this.env = undefined;
     this.distortion = undefined;
-    this.modules.clear();
     this.shadowRoot = undefined;
   }
 }
