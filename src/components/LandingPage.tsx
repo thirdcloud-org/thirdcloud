@@ -76,7 +76,7 @@ export default function LandingPage() {
         <div class="py-8 space-y-16">
           <div class="px-8 lg:px-32 text-center space-y-2 ">
             <div class="text-2xl">
-              <span class="avoidwrap">Increase Efficiency,</span>
+              <span class="avoidwrap">Increase Efficiency,</span>{" "}
               <span class="avoidwrap">Reduce Costs</span>
             </div>
             <div class="text-zinc-400">
