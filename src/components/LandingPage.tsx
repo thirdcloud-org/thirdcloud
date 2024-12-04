@@ -49,7 +49,7 @@ export default function LandingPage() {
             <div class="space-y-4 font-archivo">
               <div class="lg:text-8xl font-black text-6xl">ThirdCloud</div>
               <div
-                class="text-6xl animate-text-gradient bg-gradient-to-r from-[#e0e0e0] via-[#747474] to-[#dadada] 
+                class="text-4xl lg:text-6xl animate-text-gradient bg-gradient-to-r from-[#e0e0e0] via-[#747474] to-[#dadada] 
     bg-[200%_auto] bg-clip-text text-transparent"
               >
                 All-in-one collaboration suite
