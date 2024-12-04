@@ -1,4 +1,3 @@
-import { ModuleSource } from "@endo/module-source";
 import "@fontsource/poppins/100.css";
 import "@fontsource/poppins/200.css";
 import "@fontsource/poppins/300.css";
@@ -12,14 +11,14 @@ import { Toast } from "@kobalte/core/toast";
 import { Link, MetaProvider, Title } from "@solidjs/meta";
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
+import { deserialize } from "seroval";
 import { onMount, Suspense } from "solid-js";
 import { Portal } from "solid-js/web";
 import "./app.css";
-import { transform } from "./lib/sandbox/transform";
+import { installations, setInstallations } from "./components/apps";
 import { Auth } from "./components/Auth";
 import { cachedInstallations } from "./local";
-import { deserialize } from "seroval";
-import { installations, setInstallations } from "./components/apps";
+import MainApp from "./components/MainApp";
 
 export default function App() {
   onMount(() => {
@@ -43,21 +42,10 @@ export default function App() {
             <Link rel="canonical" href="http://thirdcloud.org/" />
           </div>
 
-          {/* <script
-            type="module"
-            innerHTML={`console.log("This works", import.meta.url);
-              export class Test  {
-              constructor() {
-                console.log("This does not work", import.meta.url);
-              }
-              };
-              new Test()
-              
-              `}
-          /> */}
-
           <Suspense>
-            <Auth>{props.children}</Auth>
+            <Auth>
+              <MainApp {...props} />
+            </Auth>
           </Suspense>
 
           <Portal>

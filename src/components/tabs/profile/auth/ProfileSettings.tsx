@@ -130,7 +130,7 @@ export default function ProfileSettings() {
 
                 <div class="px-6 pb-6 -translate-y-6 space-y-4">
                   <div class="flex items-center space-x-4">
-                    <div class="w-40 h-40 rounded-full  border overflow-hidden">
+                    <div class="w-40 h-40 rounded-lg  border overflow-hidden">
                       <img
                         src="/default-avatar.svg"
                         class="min-w-full min-h-full bg-zinc-930"

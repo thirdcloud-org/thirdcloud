@@ -10,18 +10,13 @@ export const sw: () => Omit<ServiceWorker, "postMessage"> & {
   postMessage: (message: AppMessage) => void;
 } = () => navigator.serviceWorker.controller!;
 
+export const [launchApp, setLaunchApp] = createSignal<boolean>(false);
 export const [auth, setAuth] = createSignal<AuthResult>();
 // Make sure only used after user is logged in
 export const user = () => auth()?.user;
 export const [profile, setProfile] = createSignal<Profile>();
 
 export type AppMessage = any;
-// {
-//     type: 'INSTALL_APP',
-//     app_id: string,
-//     index: string,
-//     offline: boolean
-// }
 
 declare global {
   type ResolvePath = (relativePath: string) => string;
