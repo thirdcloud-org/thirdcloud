@@ -1,0 +1,11 @@
+# robots.txt for thirdcloud.org
+
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /tmp/
+Allow: /
+
+# Sitemap
+Sitemap: https://thirdcloud.org/sitemap.xml
