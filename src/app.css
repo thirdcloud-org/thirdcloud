@@ -427,26 +427,9 @@ body {
   font-family: 'Archivo Variable', sans-serif;
 }
 
-.bg-grid {
-  background-size: 120px 120px;
-  background-position: -1px -1px; /* Slight offset to avoid border effect */
-  background-image:
-    linear-gradient(to right, #636363 1px, transparent 1px),
-    linear-gradient(to bottom, #636363 1px, transparent 1px);
-}
-
 .bg-dot {
   background-image: radial-gradient(circle, #636363 1px, transparent 1px);
   background-size: 10px 10px; /* Size of the dots */
 }
 
 span.avoidwrap { display:inline-block; }
-.middle-gradient {
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0) 0%, /* Start with transparency */
-    #0c0c0c 30%,          /* Transition to dark gray at 10% */
-    #0c0c0c 70%,          /* Keep dark gray till 90% */
-    rgba(0, 0, 0, 0) 100% /* End with transparency */
-  );
-}

@@ -40,9 +40,15 @@ export default function LandingPage() {
       </div>
 
       <div class="">
-        <div class="h-[520px] relative overflow-hidden ">
-          <div class="bg-grid h-full absolute top-0 left-0 -z-10 w-screen">
-            <div class="middle-gradient w-full h-full" />
+        <div class="h-[520px] relative">
+          <div class="absolute top-0 left-0 -z-10 w-screen h-full flex items-center">
+            <div class="bg-grid lg:bg-grid-lg h-full flex-1">
+              <div class="bg-gradient-to-r from-transparent  via-[#0c0c0c] to-[#0c0c0c] w-full h-full" />
+            </div>
+
+            <div class="bg-grid lg:bg-grid-lg h-full flex-1">
+              <div class="bg-gradient-to-l from-transparent  via-[#0c0c0c] to-[#0c0c0c] w-full h-full" />
+            </div>
           </div>
 
           <div class="space-y-16  p-8 translate-y-16">
@@ -71,24 +77,24 @@ export default function LandingPage() {
             </div>
             <div class="text-zinc-500">
               ThirdCloud helps you work smarter by bringing your tools and data
-              together.
+              together
             </div>
           </div>
 
           <div class="p-8 grid grid-cols-3 gap-8">
             <div class="space-y-4 text-center flex flex-col items-center">
-              <div class="text-zinc-500 p-4 rounded border bg-zinc-930 hover:bg-zinc-900 duration-150">
+              <div class="text-zinc-400 p-4 rounded-lg border bg-zinc-930 hover:bg-zinc-900 duration-150">
                 <Bs1SquareFill class="w-6 h-6" />
               </div>
 
               <div class="space-y-1">
                 <div class="text-xl">One Platform</div>
-                <div class="text-zinc-400">All your tools in one place</div>
+                <div class="text-zinc-500">All your tools in one place</div>
               </div>
             </div>
 
             <div class="space-y-4 text-center flex flex-col items-center">
-              <div class="text-zinc-400 p-4 rounded border bg-zinc-930 hover:bg-zinc-900 duration-150">
+              <div class="text-zinc-400 p-4 rounded-lg border bg-zinc-930 hover:bg-zinc-900 duration-150">
                 <BsEnvelopePaperHeartFill class="w-6 h-6" />
               </div>
 
@@ -101,7 +107,7 @@ export default function LandingPage() {
             </div>
 
             <div class="space-y-4 text-center flex flex-col items-center">
-              <div class="text-zinc-400 p-4 rounded border bg-zinc-930 hover:bg-zinc-900 duration-150">
+              <div class="text-zinc-400 p-4 rounded-lg border bg-zinc-930 hover:bg-zinc-900 duration-150">
                 <BsShuffle class="w-6 h-6" />
               </div>
 
@@ -133,12 +139,12 @@ export default function LandingPage() {
         </div>
 
         <div class="flex flex-col items-center bg-[#121212] mx-4 lg:mx-48 border">
-          <div class="flex items-start py-32 space-x-16 px-16">
-            <div class="space-y-3">
+          <div class="sm:flex items-start py-32 sm:space-x-16 sm:space-y-0 space-y-8 px-16">
+            <div class="space-y-3 ">
               <div class="space-y-2">
                 <div class="text-2xl font-semibold">Are you a developer? </div>
                 <div class="text-zinc-500">
-                  Build a ThirdCloud app with any web framework
+                  Build a ThirdCloud app with the tools you love!
                 </div>
               </div>
               <Button
@@ -149,11 +155,11 @@ export default function LandingPage() {
                   );
                 }}
               >
-                Getting started
+                Get started
               </Button>
             </div>
 
-            <div class="flex items-center gap-8 flex-wrap">
+            <div class="flex items-center gap-8 flex-wrap ">
               <img src="/framework/react.svg" class="w-16 h-16" />
               <img src="/framework/vue.svg" class="w-16 h-16" />
               <img src="/framework/js.svg" class="w-16 h-16" />
