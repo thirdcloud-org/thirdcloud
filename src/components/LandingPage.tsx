@@ -40,7 +40,7 @@ export default function LandingPage() {
       </div>
 
       <div class="">
-        <div class="h-[520px] relative">
+        <div class="h-[520px] relative overflow-hidden">
           <div class="absolute top-0 left-0 -z-10 w-screen h-full flex items-center">
             <div class="bg-grid lg:bg-grid-lg h-full flex-1">
               <div class="bg-gradient-to-r from-transparent  via-[#0c0c0c] to-[#0c0c0c] w-full h-full" />
