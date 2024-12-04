@@ -42,44 +42,34 @@ export default function LandingPage() {
       <div class="">
         <div class="h-[520px] relative overflow-hidden ">
           <div class="bg-grid h-full absolute top-0 left-0 -z-10 w-screen">
-            <div class="bg-gradient-to-r from-[#090909] via-[#090909] to-transparent w-full h-full " />
+            <div class="middle-gradient w-full h-full" />
           </div>
 
           <div class="space-y-16  p-8 translate-y-16">
             <div class="space-y-4 font-archivo">
-              <div class="lg:text-8xl font-black text-6xl">ThirdCloud</div>
+              <div class="lg:text-8xl font-black text-6xl text-center">
+                ThirdCloud
+              </div>
               <div
                 class="text-4xl lg:text-6xl animate-text-gradient bg-gradient-to-r from-[#e0e0e0] via-[#747474] to-[#dadada] 
-    bg-[200%_auto] bg-clip-text text-transparent"
+    bg-[200%_auto] bg-clip-text text-transparent text-center"
               >
                 All-in-one collaboration suite
               </div>
             </div>
-            <img src="/listApps.png" class="h-16 lg:h-24 " />
-          </div>
-        </div>
-
-        <div class="py-16 space-y-16">
-          <div class="flex flex-col items-center px-16 text-4xl">
-            <div>
-              Extend ThirdCloud with third-party apps
-              <br />
-              —just like in VS Code!
+            <div class="flex flex-col items-center">
+              <img src="/listApps.png" class="h-16 lg:h-24" />
             </div>
           </div>
-
-          <div class="lg:px-32 px-2">
-            <img src="/screenshot.png" class="w-full border" />
-          </div>
         </div>
 
-        <div class="py-8 space-y-16">
+        <div class="pt-16 pb-8 space-y-16">
           <div class="px-8 lg:px-32 text-center space-y-2 ">
-            <div class="text-2xl">
+            <div class="text-4xl">
               <span class="avoidwrap">Increase Efficiency,</span>{" "}
               <span class="avoidwrap">Reduce Costs</span>
             </div>
-            <div class="text-zinc-400">
+            <div class="text-zinc-500">
               ThirdCloud helps you work smarter by bringing your tools and data
               together.
             </div>
@@ -87,7 +77,7 @@ export default function LandingPage() {
 
           <div class="p-8 grid grid-cols-3 gap-8">
             <div class="space-y-4 text-center flex flex-col items-center">
-              <div class="text-zinc-400 p-4 rounded border bg-zinc-930 hover:bg-zinc-900 duration-150">
+              <div class="text-zinc-500 p-4 rounded border bg-zinc-930 hover:bg-zinc-900 duration-150">
                 <Bs1SquareFill class="w-6 h-6" />
               </div>
 
@@ -104,7 +94,7 @@ export default function LandingPage() {
 
               <div class="space-y-1">
                 <div class="text-xl">Easy Teamwork</div>
-                <div class="text-zinc-400">
+                <div class="text-zinc-500">
                   Collaborate smoothly across divisions
                 </div>
               </div>
@@ -117,7 +107,7 @@ export default function LandingPage() {
 
               <div class="space-y-1">
                 <div class="text-xl">Adaptable Workflows</div>
-                <div class="text-zinc-400">
+                <div class="text-zinc-500">
                   Add third-party apps to fit the way you work
                 </div>
               </div>
@@ -125,7 +115,24 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div class="flex flex-col items-center bg-[#121212] mx-4 lg:mx-32 border">
+        <div class="py-16 space-y-16">
+          <div class="flex flex-col items-center px-16 space-y-4">
+            <div class="text-center text-zinc-500  text-4xl">
+              Extend ThirdCloud
+              <br />
+              with{" "}
+              <span class="text-white font-semibold">third-party apps</span>
+            </div>
+
+            <div class="text-zinc-500">—just like in VS Code!</div>
+          </div>
+
+          <div class="lg:px-32 px-2">
+            <img src="/screenshot.png" class="w-full border" />
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center bg-[#121212] mx-4 lg:mx-48 border">
           <div class="flex items-start py-32 space-x-16 px-16">
             <div class="space-y-3">
               <div class="space-y-2">

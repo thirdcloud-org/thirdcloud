@@ -441,3 +441,12 @@ body {
 }
 
 span.avoidwrap { display:inline-block; }
+.middle-gradient {
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%, /* Start with transparency */
+    #090909 30%,          /* Transition to dark gray at 10% */
+    #090909 70%,          /* Keep dark gray till 90% */
+    rgba(0, 0, 0, 0) 100% /* End with transparency */
+  );
+}
