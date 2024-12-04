@@ -347,7 +347,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  @apply border bg-zinc-950 rounded-lg;
+  @apply border bg-zinc-900/60 backdrop-blur-xl rounded-lg;
   padding: 12px;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
