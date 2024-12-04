@@ -47,7 +47,7 @@ export default function LandingPage() {
             </div>
 
             <div class="bg-grid lg:bg-grid-lg h-full flex-1">
-              <div class="bg-gradient-to-l from-transparent  via-[#0c0c0c] to-[#0c0c0c] w-full h-full" />
+              <div class="bg-gradient-to-r -scale-x-100 from-transparent  via-[#0c0c0c] to-[#0c0c0c] w-full h-full" />
             </div>
           </div>
 
