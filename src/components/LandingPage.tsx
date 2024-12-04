@@ -59,7 +59,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section class="pt-16 pb-8 space-y-16">
+        <section class="pt-16 pb-8 space-y-8">
           <div class="px-8 lg:px-32 text-center space-y-2">
             <h2 class="text-4xl">
               <span class="avoidwrap">Increase Efficiency,</span>{" "}
@@ -106,21 +106,25 @@ export default function LandingPage() {
         </section>
 
         {/* Extensions Section */}
-        <section class="py-16 space-y-16 text-center">
-          <h2 class="text-4xl text-zinc-500">
-            Extend ThirdCloud with{" "}
-            <span class="text-white font-semibold">third-party apps</span>
-          </h2>
-          <p class="text-zinc-500">—just like in VS Code!</p>
-          <img
-            src="/screenshot.png"
-            class="w-full border lg:px-32 px-2"
-            alt="Third-party App Integration Example"
-          />
+        <section class="py-16 text-center space-y-8">
+          <div class="space-y-2 ">
+            <h2 class="text-4xl text-zinc-500">
+              Extend ThirdCloud with{" "}
+              <span class="text-white font-semibold">third-party apps</span>
+            </h2>
+            <p class="text-zinc-500">—just like in VS Code!</p>
+          </div>
+          <div class="lg:px-32 px-2">
+            <img
+              src="/screenshot.png"
+              class="w-full border "
+              alt="Third-party App Integration Example"
+            />
+          </div>
         </section>
 
         {/* Developer Section */}
-        <section class="flex flex-col items-center bg-[#121212] mx-4 lg:mx-48 border py-32 px-16 space-y-8 sm:space-y-0 sm:flex-row sm:space-x-16">
+        <section class="flex flex-col items-center bg-[#121212] mx-4  lg:mx-48 border py-32 px-16 space-y-8 sm:space-y-0 sm:flex-row sm:space-x-16">
           <div class="space-y-3">
             <h3 class="text-2xl font-semibold">Are you a developer?</h3>
             <p class="text-zinc-500">
@@ -167,7 +171,7 @@ export default function LandingPage() {
         </section>
 
         {/* Footer */}
-        <footer class="relative">
+        <footer class="relative mt-16">
           <img
             src="/cloud.jpg"
             class="w-full grayscale absolute h-full object-cover -z-20"
