@@ -8,7 +8,7 @@ export default function RequireEmail() {
   return (
     <div class="flex flex-col items-center justify-center h-full ">
       <div class="text-center max-w-lg flex flex-col items-center space-y-2 ">
-        {/* <BsIncognito class="w-24 h-24 text-neutral-500" />
+        {/* <BsIncognito class="w-24 h-24 text-zinc-500" />
     <div class="font-medium text-lg">
       Verify your email
     </div> */}
@@ -31,8 +31,8 @@ export default function RequireEmail() {
             class="outline-none  
           min-w-0 
           px-4 py-2
-          placeholder-neutral-500
-          text-sm caret-neutral-500 bg-transparent"
+          placeholder-zinc-500
+          text-sm caret-zinc-500 bg-transparent"
           />
         </div>
 

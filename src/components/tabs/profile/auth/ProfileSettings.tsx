@@ -98,7 +98,7 @@ export default function ProfileSettings() {
                         </div>
                       </div>
 
-                      <div class="p-4 bg-neutral-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
+                      <div class="p-4 bg-zinc-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
                         <Button
                           onClick={async () => {
                             const result = await db.transact([
@@ -126,14 +126,14 @@ export default function ProfileSettings() {
               </Dialog>
 
               <div class="flex-1">
-                <div class="bg-neutral-800 h-48"></div>
+                <div class="bg-zinc-800 h-48"></div>
 
                 <div class="px-6 pb-6 -translate-y-6 space-y-4">
                   <div class="flex items-center space-x-4">
                     <div class="w-40 h-40 rounded-full  border overflow-hidden">
                       <img
                         src="/default-avatar.svg"
-                        class="min-w-full min-h-full bg-neutral-930"
+                        class="min-w-full min-h-full bg-zinc-930"
                       />
                     </div>
 
@@ -169,11 +169,11 @@ export default function ProfileSettings() {
                     <div class="font-semibold">Contact information</div>
 
                     <div class="flex items-start space-x-4">
-                      <div class="p-2 bg-neutral-900 border rounded">
-                        <BsEnvelopeAtFill class="w-6 h-6 text-neutral-500" />
+                      <div class="p-2 bg-zinc-900 border rounded">
+                        <BsEnvelopeAtFill class="w-6 h-6 text-zinc-500" />
                       </div>
                       <div>
-                        <div class="text-sm text-neutral-400">Email</div>
+                        <div class="text-sm text-zinc-400">Email</div>
                         <div>{_user().email}</div>
                       </div>
                     </div>
@@ -181,11 +181,11 @@ export default function ProfileSettings() {
                     <For each={_profile().contacts}>
                       {(c) => (
                         <div class="flex items-start space-x-4">
-                          <div class="p-2 bg-neutral-900 border rounded">
-                            <BsTelephoneFill class="w-6 h-6 text-neutral-500" />
+                          <div class="p-2 bg-zinc-900 border rounded">
+                            <BsTelephoneFill class="w-6 h-6 text-zinc-500" />
                           </div>
                           <div>
-                            <div class="text-sm text-neutral-400">
+                            <div class="text-sm text-zinc-400">
                               Phone number
                             </div>
                             <Show

@@ -115,10 +115,12 @@ export class Sandbox {
       __options__: true,
       id: this.id,
       globals: {
-        host: {
+        $host: harden({
           users: [],
-          profile,
-        },
+          profile: () => {
+            return profile?.();
+          },
+        }),
         $host_import_meta: {
           url: (specifier: string) => {
             const url = new URL(specifier, "http://localhost:5173").toString();

@@ -27,8 +27,8 @@ export default function RequireCode() {
             class="outline-none  
               min-w-0 
               px-4 py-2
-              placeholder-neutral-500
-              text-sm caret-neutral-500 bg-transparent"
+              placeholder-zinc-500
+              text-sm caret-zinc-500 bg-transparent"
           />
         </div>
 

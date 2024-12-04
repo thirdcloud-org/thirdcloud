@@ -6,7 +6,7 @@ export default function NoProfile() {
   return (
     <div class="flex flex-col items-center justify-center h-full ">
       <div class="text-center max-w-lg flex flex-col items-center space-y-2 ">
-        <BsIncognito class="w-24 h-24 text-neutral-500" />
+        <BsIncognito class="w-24 h-24 text-zinc-500" />
         <div class="font-medium text-lg">
           You are currently logged in as an anonymous user.
         </div>

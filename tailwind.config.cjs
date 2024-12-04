@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        neutral: {
+        zinc: {
           970: '#050505',
           930: '#101012'
         },
