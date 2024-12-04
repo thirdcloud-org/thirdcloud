@@ -29,16 +29,14 @@ export default function LandingPage() {
           <BsGithub class="w-6 h-6" />
         </a>
 
-        <Button
+        <button
+          class="el btn flex items-center space-x-2 !bg-[#6321f2] hover:!bg-[#6626f2] !text-white border border-[#a168ff] drop-shadow-sm !shadow-[#6726f23b]/20 hover:!shadow-[#6626f2]/50"
           onClick={() => {
             setLaunchApp(true);
           }}
-          icons={{
-            idle: BsRocketFill,
-          }}
         >
           <div>Launch App</div>
-        </Button>
+        </button>
       </div>
 
       <div class="">
@@ -178,6 +176,19 @@ export default function LandingPage() {
             </div>
 
             <div>
+              <span class="text-xs text-zinc-400">
+                For any questions or support, please feel free to reach out via
+                <br />
+                <a
+                  href="mailto:support@thirdcloud.org"
+                  class="hover:text-white  duration-150 font-bold"
+                >
+                  support@thirdcloud.org
+                </a>
+              </span>
+            </div>
+
+            <div>
               <a
                 href="https://github.com/thirdcloud-org/thirdcloud"
                 target="_blank"
@@ -185,17 +196,6 @@ export default function LandingPage() {
                 class="text-zinc-500 hover:text-white duration-150"
               >
                 <BsGithub class="w-6 h-6" />
-              </a>
-            </div>
-
-            <div>
-              For any questions or support, please feel free to reach out via
-              <br />
-              <a
-                href="mailto:support@thirdcloud.org"
-                class="hover:underline  duration-150 font-bold"
-              >
-                support@thirdcloud.org
               </a>
             </div>
           </div>
