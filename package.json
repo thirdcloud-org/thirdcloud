@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@endo/module-source": "^1.1.2",
+    "@fontsource-variable/archivo": "^5.1.0",
     "@fontsource/poppins": "^5.1.0",
     "@instantdb/core": "^0.14.29",
     "@kobalte/core": "^0.13.7",

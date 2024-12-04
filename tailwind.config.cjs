@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
+        "text-gradient": "text 1.5s linear infinite",
 				fade: 'fadeIn .5s ease-in-out',
 			},
 			keyframes: {
@@ -11,6 +12,11 @@ module.exports = {
 					from: { opacity: 0 },
 					to: { opacity: 1 },
 				},
+        text: {
+          to: {
+            backgroundPosition: "200% center",
+          },
+        },
 			},
       colors: {
         zinc: {
