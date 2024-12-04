@@ -124,49 +124,51 @@ export default function LandingPage() {
         </section>
 
         {/* Developer Section */}
-        <section class="flex flex-col items-center bg-[#121212] mx-4  lg:mx-48 border py-32 px-16 space-y-8 sm:space-y-0 sm:flex-row sm:space-x-16">
-          <div class="space-y-3">
-            <h3 class="text-2xl font-semibold">Are you a developer?</h3>
-            <p class="text-zinc-500">
-              Build a ThirdCloud app with the tools you love!
-            </p>
-            <Button
-              onClick={() => {
-                window.open(
-                  "https://github.com/thirdcloud-org/thirdcloud",
-                  "_blank"
-                );
-              }}
-            >
-              Get started
-            </Button>
-          </div>
-          <div class="flex items-center gap-8 flex-wrap">
-            <img
-              src="/framework/react.svg"
-              class="w-16 h-16"
-              alt="React Framework Logo"
-            />
-            <img
-              src="/framework/vue.svg"
-              class="w-16 h-16"
-              alt="Vue Framework Logo"
-            />
-            <img
-              src="/framework/js.svg"
-              class="w-16 h-16"
-              alt="JavaScript Framework Logo"
-            />
-            <img
-              src="/framework/qwik.svg"
-              class="w-16 h-16"
-              alt="Qwik Framework Logo"
-            />
-            <img
-              src="/framework/solid.svg"
-              class="w-16 h-16"
-              alt="SolidJS Framework Logo"
-            />
+        <section class="flex flex-col items-center bg-[#121212]  border my-32 mx-2 lg:mx-48">
+          <div class="space-y-8 mx-4 lg:mx-48 sm:space-y-0 sm:flex sm:flex-row sm:space-x-16 py-16">
+            <div class="space-y-3 ">
+              <h3 class="text-2xl font-semibold">Are you a developer?</h3>
+              <p class="text-zinc-500">
+                Build a ThirdCloud app with the tools you love!
+              </p>
+              <Button
+                onClick={() => {
+                  window.open(
+                    "https://github.com/thirdcloud-org/thirdcloud",
+                    "_blank"
+                  );
+                }}
+              >
+                Get started
+              </Button>
+            </div>
+            <div class="flex items-center gap-8 flex-wrap">
+              <img
+                src="/framework/react.svg"
+                class="w-16 h-16"
+                alt="React Framework Logo"
+              />
+              <img
+                src="/framework/vue.svg"
+                class="w-16 h-16"
+                alt="Vue Framework Logo"
+              />
+              <img
+                src="/framework/js.svg"
+                class="w-16 h-16"
+                alt="JavaScript Framework Logo"
+              />
+              <img
+                src="/framework/qwik.svg"
+                class="w-16 h-16"
+                alt="Qwik Framework Logo"
+              />
+              <img
+                src="/framework/solid.svg"
+                class="w-16 h-16"
+                alt="SolidJS Framework Logo"
+              />
+            </div>
           </div>
         </section>
 
