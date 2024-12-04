@@ -20,7 +20,7 @@
 } */
 
 body {
-  @apply bg-[#090909] text-white;
+  @apply bg-[#0c0c0c] text-white;
   font-family: "Poppins", sans-serif;
 }
 
@@ -445,8 +445,8 @@ span.avoidwrap { display:inline-block; }
   background: linear-gradient(
     to right,
     rgba(0, 0, 0, 0) 0%, /* Start with transparency */
-    #090909 30%,          /* Transition to dark gray at 10% */
-    #090909 70%,          /* Keep dark gray till 90% */
+    #0c0c0c 30%,          /* Transition to dark gray at 10% */
+    #0c0c0c 70%,          /* Keep dark gray till 90% */
     rgba(0, 0, 0, 0) 100% /* End with transparency */
   );
 }
