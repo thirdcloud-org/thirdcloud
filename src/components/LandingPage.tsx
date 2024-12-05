@@ -124,7 +124,7 @@ export default function LandingPage() {
         </section>
 
         {/* Developer Section */}
-        <section class="flex flex-col items-center bg-[#121212]  border my-32 mx-2 lg:mx-48">
+        <section class="flex flex-col items-center bg-[#121212]  border my-8  mx-2 lg:mx-48">
           <div class="space-y-8 px-4 lg:px-16 sm:space-y-0 sm:flex sm:flex-row sm:space-x-16 py-16">
             <div class="space-y-3">
               <h3 class="text-2xl font-semibold">Are you a developer?</h3>
