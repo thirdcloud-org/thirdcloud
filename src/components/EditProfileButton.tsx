@@ -1,0 +1,125 @@
+import { tx } from "@instantdb/core";
+import { Dialog } from "@kobalte/core/dialog";
+import { BsPencilFill } from "solid-icons/bs";
+import { createEffect, createSignal, For } from "solid-js";
+import { createStore } from "solid-js/store";
+import Button from "~/components/Button";
+import { db, Profile } from "~/components/database";
+import { profile, setGuestProfile, signed_in, user_id } from "~/global";
+export default function EditProfileButton() {
+  const [store, setStore] = createStore<Partial<Profile>>({});
+
+  createEffect(() => {
+    const p = profile();
+    setStore(p ?? {});
+  });
+  const [open, setOpen] = createSignal(false);
+
+  return (
+    <>
+      <Dialog open={open()} onOpenChange={setOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay class="dialog__overlay" />
+          <div class="dialog__positioner">
+            <Dialog.Content class="dialog__content">
+              <div class="p-4 space-y-6">
+                <div class="dialog__header">
+                  <Dialog.Title class="font-semibold text-xl">
+                    Edit your profile
+                  </Dialog.Title>
+                </div>
+
+                <div
+                  class="overflow-auto space-y-6"
+                  style={{
+                    "max-height": "calc(100vh - 200px)",
+                    "scrollbar-width": "thin",
+                    "scrollbar-color": "#333 transparent",
+                  }}
+                >
+                  <div class="space-y-2">
+                    <div class="font-medium">Name</div>
+                    <input
+                      value={store.name}
+                      onInput={(e) => {
+                        setStore("name", e.target.value);
+                      }}
+                      class="form-input"
+                    />
+                  </div>
+
+                  <div class="space-y-2">
+                    <div class="font-medium">Role</div>
+                    <input
+                      value={store.role}
+                      onInput={(e) => {
+                        setStore("role", e.target.value);
+                      }}
+                      class="form-input"
+                    />
+                  </div>
+
+                  <For each={store.contacts}>
+                    {(c, i) => (
+                      <div class="space-y-2">
+                        <div class="font-medium">Phone number</div>
+                        <input
+                          value={c.value}
+                          onInput={(e) => {
+                            setStore("contacts", i(), "value", e.target.value);
+                          }}
+                          class="form-input"
+                        />
+                      </div>
+                    )}
+                  </For>
+                </div>
+              </div>
+
+              <div class="p-4 bg-zinc-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
+                <Button
+                  onClick={async () => {
+                    const id = user_id();
+
+                    if (id) {
+                      const result = await db.transact([
+                        tx.profiles[id].update(store),
+                      ]);
+                      console.log("update profile result", result);
+                    } else {
+                      setGuestProfile(store as Profile);
+                    }
+
+                    setOpen(false);
+                  }}
+                  class="btn btn-inverted"
+                >
+                  Save
+                </Button>
+                <Button
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                  class="btn flex-none"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </Dialog.Content>
+          </div>
+        </Dialog.Portal>
+      </Dialog>
+      <Button
+        class="btn btn-sm flex items-center space-x-1.5"
+        onClick={() => {
+          setOpen(true);
+        }}
+        icons={{
+          idle: BsPencilFill,
+        }}
+      >
+        Edit Profile
+      </Button>
+    </>
+  );
+}

@@ -1,43 +1,39 @@
-import {
-    init,
-    InstantClient
-} from "@instantdb/core";
-
+import { init, InstantClient, tx } from "@instantdb/core";
 
 export interface Channel {
-    id: string;
-    name: string;
-    type: "text" | "voice";
+  id: string;
+  name: string;
+  type: "text" | "voice";
 }
 
 export interface Message {
-    id: string;
-    content: string;
-    created_at: string;
+  id: string;
+  content: string;
+  created_at: string;
 }
 
 export interface Note {
-    id: string;
-    name: string;
-    emoji_unified: string;
+  id: string;
+  name: string;
+  emoji_unified: string;
 }
 
 export interface NoteDetail {
-    id: string;
-    state: string;
+  id: string;
+  state: string;
 }
 
-type Contact = {
-    type: 'mobile',
-    value: string
-}
+export type Contact = {
+  type: "mobile" | "email";
+  value: string;
+};
 export interface Profile {
-    id: string;
-    name: string;
-    role: string;
-    description: string;
-    contacts: Contact[];
-    avatar_url: string;
+  id: string;
+  name: string;
+  role: string;
+  description: string;
+  contacts: Contact[];
+  avatar_url: string;
 }
 
 type RoomSchema = any;
@@ -60,27 +56,24 @@ type RoomSchema = any;
 // };
 
 type Schema = {
-    // channels: Channel;
-    // messages: Message;
-    // notes: Note;
-    // noteDetails: NoteDetail;
-    profiles: Profile;
+  // channels: Channel;
+  // messages: Message;
+  // notes: Note;
+  // noteDetails: NoteDetail;
+  profiles: Profile;
 };
-
-
 
 export let db: InstantClient<Schema, RoomSchema>;
 
 if (typeof window !== "undefined") {
-    db = init<Schema, RoomSchema>({
-        appId: import.meta.env.VITE_INSTANTDB_APP_ID,
-        devtool: false,
-    });
-    window.addEventListener("beforeunload", () => {
-        db.shutdown();
-    });
+  db = init<Schema, RoomSchema>({
+    appId: import.meta.env.VITE_INSTANTDB_APP_ID,
+    devtool: false,
+  });
+  window.addEventListener("beforeunload", () => {
+    db.shutdown();
+  });
 }
-
 
 // export function useQuery<T extends Query>(
 //     query: Accessor<Exactly<Query, T> | null | undefined>,

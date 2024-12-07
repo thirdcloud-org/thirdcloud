@@ -1,21 +1,29 @@
 import { Toast, toaster } from "@kobalte/core/toast";
-import { BsExclamationCircleFill, BsXLg } from "solid-icons/bs";
+import {
+  BsCheckCircleFill,
+  BsExclamationCircleFill,
+  BsXLg,
+} from "solid-icons/bs";
+import { Dynamic } from "solid-js/web";
 
 export const showToast = (_props: {
   type: "error" | "success";
   title: string;
   description: string;
 }) => {
+  const icons = {
+    error: BsExclamationCircleFill,
+    success: BsCheckCircleFill,
+  };
+
   const id = toaster.show((props) => (
     <Toast persistent toastId={props.toastId} class="toast">
       <div class="toast__content">
         <div>
           <div class="flex items-start space-x-2">
-            {_props.type == "error" && (
-              <div class="py-1">
-                <BsExclamationCircleFill class="w-5 h-5" />
-              </div>
-            )}
+            <div class="py-1">
+              <Dynamic component={icons[_props.type]} class="w-5 h-5" />
+            </div>
 
             <div>
               <Toast.Title class="toast__title">{_props.title}</Toast.Title>

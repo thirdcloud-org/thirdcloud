@@ -237,8 +237,6 @@ body {
   @apply h-[1px] w-full border-b;
 }
 
-
-
 .header {
   @apply uppercase tracking-tight text-sm;
 }
@@ -264,7 +262,7 @@ body {
   z-index: 50;
   max-width: min(calc(100vw - 16px), 500px);
 
-  @apply bg-zinc-950 text-white border  rounded-lg overflow-hidden;
+  @apply bg-[#0b0b0c] text-white border  rounded-lg overflow-hidden;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   animation: contentHide 300ms ease-in forwards;
 }
@@ -424,7 +422,7 @@ body {
 }
 
 .font-archivo {
-  font-family: 'Archivo Variable', sans-serif;
+  font-family: "Archivo Variable", sans-serif;
 }
 
 .bg-dot {
@@ -432,4 +430,6 @@ body {
   background-size: 10px 10px; /* Size of the dots */
 }
 
-span.avoidwrap { display:inline-block; }
+span.avoidwrap {
+  display: inline-block;
+}

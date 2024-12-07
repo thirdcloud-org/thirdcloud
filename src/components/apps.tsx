@@ -3,7 +3,7 @@ import { createSignal } from "solid-js";
 import { addTask, markComplete, RunningTaskData } from "~/components/tasks";
 import { compile, CompileResult } from "~/lib/compiler";
 import { Sandbox } from "~/lib/sandbox/sanbox";
-import { cachedInstallations } from "~/local";
+import { ls_host_installations } from "~/local";
 import { showToast } from "~/toast";
 import Button from "./Button";
 
@@ -301,7 +301,7 @@ export const install = async (app: AppMeta) => {
     setInstallations([ins, ...installations()]);
     console.log("ins", ins);
     const serialized = serialize(ins);
-    await cachedInstallations.setItem(app.id, serialized);
+    await ls_host_installations.setItem(app.id, serialized);
   } catch (e) {
     console.error("Cannot install app", e);
     toast_err_cannot_install();
@@ -313,7 +313,7 @@ export const remove = async (app: AppMeta) => {
     ...installations().filter((installation) => installation.id != app.id),
   ]);
 
-  await cachedInstallations.removeItem(app.id);
+  await ls_host_installations.removeItem(app.id);
 };
 
 const set = (disabled: boolean) => async (app: AppMeta) => {
@@ -329,7 +329,7 @@ const set = (disabled: boolean) => async (app: AppMeta) => {
     newIns,
   ]);
 
-  await cachedInstallations.setItem(app.id, serialize(newIns));
+  await ls_host_installations.setItem(app.id, serialize(newIns));
 };
 
 export const disable = set(true);

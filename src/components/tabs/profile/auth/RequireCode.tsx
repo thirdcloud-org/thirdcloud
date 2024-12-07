@@ -1,40 +1,60 @@
 import { tx } from "@instantdb/core";
-import { createSignal, Show } from "solid-js";
+import { batch, createSignal, Show } from "solid-js";
 import Button from "~/components/Button";
 import { db } from "~/components/database";
 import { code, email, setCode } from "./authflow";
 
+import { Dialog } from "@kobalte/core/dialog";
+import { setFlow, setOpen } from "./authflow";
+import { profile } from "~/global";
+import { showToast } from "~/toast";
+
 export default function RequireCode() {
   const [error, setError] = createSignal("");
+
   return (
-    <div class="flex flex-col items-center justify-center h-full ">
-      <div class="text-center max-w-lg flex flex-col items-center space-y-2 ">
-        <div class="c-description">
-          Check your email {email()} for a 6-digit code.
+    <>
+      <div class="p-4 space-y-6">
+        <div class="dialog__header">
+          <Dialog.Title class="font-semibold text-xl">Sign In</Dialog.Title>
         </div>
 
-        <Show when={error()}>
-          <div class="c-description !text-red-500">{error()}</div>
-        </Show>
+        <div
+          class="overflow-auto space-y-2"
+          style={{
+            "max-height": "calc(100vh - 200px)",
+            "scrollbar-width": "thin",
+            "scrollbar-color": "#333 transparent",
+          }}
+        >
+          <div class="c-description">
+            Check your email {email()} for a 6-digit code.
+          </div>
 
-        <div class="el border shadow-lg rounded-lg overflow-hidden">
-          <input
-            value={code()}
-            onInput={(e) => {
-              setCode(e.currentTarget.value);
-            }}
-            placeholder="XXXXXX"
-            class="outline-none  
+          <Show when={error()}>
+            <div class="c-description !text-red-500">{error()}</div>
+          </Show>
+
+          <div class="el border shadow-lg rounded-lg overflow-hidden">
+            <input
+              value={code()}
+              onInput={(e) => {
+                setCode(e.currentTarget.value);
+              }}
+              placeholder="XXXXXX"
+              class="outline-none  
               min-w-0 
               px-4 py-2
               placeholder-zinc-500
               text-sm caret-zinc-500 bg-transparent"
-          />
+            />
+          </div>
         </div>
+      </div>
 
+      <div class="p-4 bg-zinc-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
         <Button
           disabled={!code()}
-          class="btn btn-sm"
           onClick={async () => {
             try {
               const _email = email();
@@ -60,37 +80,46 @@ export default function RequireCode() {
                 });
 
                 if (data.profiles[0]) {
-                  // Already have profile, no-op
+                  // Already have profile
+                  // no-op, do not overwrite cloud profile,
+                  // and let Auth component reactively update _profile
                   console.log("already have profile", data.profiles[0]);
                 } else {
+                  const p = profile();
                   const result = await db.transact([
-                    tx.profiles[_signin.user.id].update({
-                      name: "Test User",
-                      avatar_url: "",
-                      // Create one phone number by default
-                      contacts: [
-                        {
-                          type: "mobile",
-                          value: "",
-                        },
-                      ],
-                      description: "",
-                      role: "Product Manager",
-                    }),
+                    tx.profiles[_signin.user.id].update(p as any),
                   ]);
                   console.log("created profile result", result);
                 }
+
+                showToast({
+                  title: "Signed In",
+                  description: "Successfully signed in",
+                  type: "success",
+                });
+                setOpen(false);
               }
             } catch (e) {
               console.error(e);
               setError("Error: Invalid code");
-            } finally {
             }
           }}
+          class="btn btn-inverted"
         >
-          Continue
+          Sign In
+        </Button>
+        <Button
+          onClick={() => {
+            batch(() => {
+              setOpen(false);
+              setFlow("email");
+            });
+          }}
+          class="btn flex-none"
+        >
+          Cancel
         </Button>
       </div>
-    </div>
+    </>
   );
 }
