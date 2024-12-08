@@ -6,13 +6,13 @@ import { DropdownMenu } from "@kobalte/core/dropdown-menu";
 import { BsChevronExpand, BsPlusLg } from "solid-icons/bs";
 import { VsLoading, VsPassFilled } from "solid-icons/vs";
 import Button from "~/components/Button";
-import { db, Workspace } from "~/components/database";
+import { db } from "~/components/database";
 
 import { createStore } from "solid-js/store";
 import { showToast } from "~/toast";
 import { sortedTasks } from "./tasks";
-import { selectedWorkspace, workspaces } from "./workspace";
 import { profile } from "~/global";
+import { selectedWorkspace, workspaces } from "./workspace";
 
 export default function WorkspaceBarItem() {
   const [store, setStore] = createStore<Partial<Workspace>>({

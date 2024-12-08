@@ -1,7 +1,6 @@
 import { id, init, tx } from "@instantdb/admin";
 import * as jose from "jose";
 import { getRequestEvent } from "solid-js/web";
-// import { Profile } from "./components/database";
 
 const str_to_uint8arr = (str: string) => new TextEncoder().encode(str);
 
@@ -20,9 +19,7 @@ function instantdb() {
   });
 }
 
-// Since we allow guest profiles, CRUD on profiles needs to be server-side
-export async function profile_read(jwt_token: string) {
-  "use server";
+async function checkPermission(jwt_token: string) {
   const JWT_SECRET_KEY = getSecretKey("JWT_SECRET_KEY");
   const { payload } = await jose.jwtVerify(
     jwt_token,
@@ -35,6 +32,13 @@ export async function profile_read(jwt_token: string) {
   console.log("payload", payload);
 
   if (table !== "profiles" || !profile_id) throw new Error("Invalid token");
+  return profile_id;
+}
+
+// Since we allow guest profiles, CRUD on profiles needs to be server-side
+export async function profile_read(jwt_token: string) {
+  "use server";
+  const profile_id = await checkPermission(jwt_token);
 
   const db = instantdb();
   const data = await db.query({
@@ -66,9 +70,10 @@ export async function profile_create(data: any) {
   return token;
 }
 
-export async function profile_update(secret: string, id: string, data: any) {
+export async function profile_update(jwt_token: string, data: any) {
+  const profile_id = await checkPermission(jwt_token);
   const db = instantdb();
-  const result = await db.transact(tx.profiles[id].update(data));
+  const result = await db.transact(tx.profiles[profile_id].update(data));
   console.log("profile updated", result);
   return result;
 }

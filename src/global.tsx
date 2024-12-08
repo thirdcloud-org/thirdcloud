@@ -1,6 +1,5 @@
 import { AuthResult } from "@instantdb/core/dist/module/clientTypes";
 import { createSignal, observable } from "solid-js";
-import { Profile } from "./components/database";
 import useOverlay from "./components/UseOverlay";
 import { CompileResult } from "./lib/compiler";
 import { ls_host } from "./local";
@@ -29,6 +28,10 @@ export const user_contacts = () => {
 export type AppMessage = any;
 
 declare global {
+  interface Window {
+    sesLockedDown: boolean;
+  }
+
   type ResolvePath = (relativePath: string) => string;
 
   type AppMeta = {
@@ -67,5 +70,76 @@ declare global {
     disabled: boolean;
     allow_page_reload: boolean;
     compiledResult: CompileResult;
+  };
+
+  // Database
+
+  export interface Channel {
+    id: string;
+    name: string;
+    type: "text" | "voice";
+  }
+
+  export interface Message {
+    id: string;
+    content: string;
+    created_at: string;
+  }
+
+  export interface Note {
+    id: string;
+    name: string;
+    emoji_unified: string;
+  }
+
+  export interface NoteDetail {
+    id: string;
+    state: string;
+  }
+
+  export type Contact = {
+    type: "mobile" | "email";
+    value: string;
+  };
+  export interface Profile {
+    id: string;
+    name: string;
+    role: string;
+    description: string;
+    contacts: Contact[];
+    avatar_src: string;
+    banner_src: string;
+  }
+
+  export type Workspace = {
+    id: string;
+    name: string;
+  };
+
+  type RoomSchema = any;
+  // // Provide a room schema to get typings for presence!
+  // type RoomSchema = {
+  //     note: {
+  //         presence: { name: string };
+  //         topics: {
+  //             onAwarenessUpdate: {
+  //                 update: number[];
+  //             };
+  //             onDocUpdate: {
+  //                 update: number[];
+  //             };
+  //         };
+  //     };
+  //     voice: {
+  //         presence: DeviceMetadata;
+  //     };
+  // };
+
+  type Schema = {
+    // channels: Channel;
+    // messages: Message;
+    // notes: Note;
+    // noteDetails: NoteDetail;
+    profiles: Profile;
   };
 }

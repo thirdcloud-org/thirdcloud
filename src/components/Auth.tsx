@@ -11,7 +11,7 @@ import {
   signedOut,
 } from "~/global";
 import { ls_host } from "~/local";
-import { db, Profile } from "./database";
+import { db } from "./database";
 import LandingPage from "./LandingPage";
 import SplashScreen from "./SplashScreen";
 import { profile_create, profile_read } from "~/server";

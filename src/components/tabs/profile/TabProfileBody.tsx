@@ -2,7 +2,7 @@ import { BsEnvelopeFill, BsTelephoneFill } from "solid-icons/bs";
 import { For, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import Button from "~/components/Button";
-import { Contact, db } from "~/components/database";
+import { db } from "~/components/database";
 import EditProfileButton from "~/components/EditProfileButton";
 import SignInButton from "~/components/SignInButton";
 import {

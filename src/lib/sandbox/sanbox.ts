@@ -8,12 +8,6 @@ import { profile } from "~/global";
 import { createSESVirtualEnvironment } from "../ses-membrane";
 import { transform } from "./transform";
 
-declare global {
-  interface Window {
-    sesLockedDown: boolean;
-  }
-}
-
 type CachedModule = { moduleSource: ModuleSource; transformedCode: string };
 export type Distortion = Map<any, () => any>;
 export class Sandbox {
