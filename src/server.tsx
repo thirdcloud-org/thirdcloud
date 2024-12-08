@@ -3,20 +3,20 @@ import jwt from "jsonwebtoken";
 import { getRequestEvent } from "solid-js/web";
 // import { Profile } from "./components/database";
 
-// function getSecretKey(name: string) {
-//   const event = getRequestEvent();
-//   const secret_key =
-//     event?.nativeEvent.context.cloudflare?.env[name] ?? process.env[name];
-//   return secret_key;
-// }
+function getSecretKey(name: string) {
+  const event = getRequestEvent();
+  const secret_key =
+    event?.nativeEvent.context.cloudflare?.env[name] ?? process.env[name];
+  return secret_key;
+}
 
-// function instantdb() {
-//   const INSTANT_APP_ADMIN_TOKEN = getSecretKey("INSTANT_APP_ADMIN_TOKEN");
-//   return init({
-//     appId: import.meta.env.VITE_INSTANTDB_APP_ID,
-//     adminToken: INSTANT_APP_ADMIN_TOKEN,
-//   });
-// }
+function instantdb() {
+  const INSTANT_APP_ADMIN_TOKEN = getSecretKey("INSTANT_APP_ADMIN_TOKEN");
+  return init({
+    appId: import.meta.env.VITE_INSTANTDB_APP_ID,
+    adminToken: INSTANT_APP_ADMIN_TOKEN,
+  });
+}
 
 // Since we allow guest profiles, CRUD on profiles needs to be server-side
 export async function profile_read(jwt_token: string) {
