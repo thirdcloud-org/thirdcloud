@@ -78,7 +78,6 @@ export default function EditProfileButton() {
               <div class="p-4 bg-zinc-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
                 <Button
                   onClick={async () => {
-                    const id = profile().id;
                     const profile_jwt_token = profileJwtToken();
                     if (!profile_jwt_token)
                       throw new Error("Client has no profile_jwt_token");

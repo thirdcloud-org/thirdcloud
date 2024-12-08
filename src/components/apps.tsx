@@ -18,8 +18,6 @@ export const appMetas: AppMeta[] = [
     description:
       "Centralize team communication with threads, channels, and real-time messaging.",
     readme: `
-# Chat Hub
-
 The Chat Hub centralizes team messaging, providing an efficient, real-time communication platform to enhance collaboration. Ideal for remote teams, it allows structured conversations in channels and threads, ensuring organized and efficient exchanges.
 
 ### Key Concepts
@@ -46,8 +44,6 @@ The Chat Hub centralizes team messaging, providing an efficient, real-time commu
     description:
       "Plan, organize, and track projects with Kanban boards and Gantt charts.",
     readme: `
-# Project Management Board
-
 A comprehensive project management tool, the Project Management Board organizes tasks, assigns deadlines, and tracks project progress. Using both Kanban boards and Gantt charts, this app provides teams with flexibility to manage tasks efficiently and meet project goals.
 
 ### Key Concepts
@@ -72,8 +68,6 @@ A comprehensive project management tool, the Project Management Board organizes 
     name: "Collaborative Notes",
     description: "Real-time note-taking with templates and rich text editing.",
     readme: `
-# Collaborative Notes
-
 Collaborative Notes allows team members to create, edit, and share notes in real-time. Designed for brainstorming, meeting notes, and documentation, it includes rich text formatting and customizable templates for structured note-taking.
 
 ### Key Concepts
@@ -99,8 +93,6 @@ Collaborative Notes allows team members to create, edit, and share notes in real
     description:
       "Collaborative whiteboard for brainstorming and visual note-taking.",
     readme: `
-# Whiteboard
-
 The Whiteboard app offers a digital space for brainstorming and visual collaboration. Users can draw, add sticky notes, and collaborate on ideas, perfect for creative brainstorming and design discussions.
 
 ### Key Concepts

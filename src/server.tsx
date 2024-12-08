@@ -35,6 +35,14 @@ async function checkPermission(jwt_token: string) {
   return profile_id;
 }
 
+async function generate_jwt(profile_id: string) {
+  const JWT_SECRET_KEY = getSecretKey("JWT_SECRET_KEY");
+  const token = await new jose.SignJWT({ table: "profiles", id: profile_id })
+    .setProtectedHeader({ alg: "HS256" })
+    .sign(str_to_uint8arr(JWT_SECRET_KEY));
+  return token;
+}
+
 // Since we allow guest profiles, CRUD on profiles needs to be server-side
 export async function profile_read(jwt_token: string) {
   "use server";
@@ -57,20 +65,46 @@ export async function profile_read(jwt_token: string) {
   return profile;
 }
 
+export async function profile_get_jwt(refresh_token: string) {
+  "use server";
+  const db = instantdb();
+  const user = await db.auth.verifyToken(refresh_token);
+  if (!user) throw new Error("Uh oh, you are not authenticated");
+
+  const { profiles } = await db.query({
+    profiles: {
+      $: {
+        where: {
+          "$users.id": user.id,
+        },
+      },
+    },
+  });
+
+  const profile = profiles.at(0);
+  if (!profile) throw new Error("Profile not found");
+
+  const token = await generate_jwt(profile.id);
+
+  return token;
+}
+
 export async function profile_create(data: any) {
   "use server";
-  const JWT_SECRET_KEY = getSecretKey("JWT_SECRET_KEY");
-  const db = instantdb();
+
   const profile_id = id();
+
+  const db = instantdb();
   const result = await db.transact([tx.profiles[profile_id].update(data)]);
   console.log("created profile result", result);
-  const token = await new jose.SignJWT({ table: "profiles", id: profile_id })
-    .setProtectedHeader({ alg: "HS256" })
-    .sign(str_to_uint8arr(JWT_SECRET_KEY));
+
+  const token = await generate_jwt(profile_id);
+
   return token;
 }
 
 export async function profile_update(jwt_token: string, data: any) {
+  "use server";
   const profile_id = await checkPermission(jwt_token);
   const db = instantdb();
   const result = await db.transact(tx.profiles[profile_id].update(data));

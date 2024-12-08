@@ -12,6 +12,7 @@ import {
   signed_in,
   user_contacts,
 } from "~/global";
+import { ls_host } from "~/local";
 
 function ContactRow(props: { c: Contact }) {
   const ui = {
@@ -79,6 +80,8 @@ export default function TabProfileBody() {
                     onClick={() => {
                       setSignedOut(true);
                       setTimeout(() => {
+                        // Start with a new guest account
+                        ls_host.removeItem("profile_jwt_token");
                         db.auth.signOut();
                         window.location.reload();
                       }, 200);

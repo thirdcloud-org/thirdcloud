@@ -9,12 +9,13 @@ import {
   setProfile,
   setProfileJwtToken,
   signedOut,
+  user,
 } from "~/global";
 import { ls_host } from "~/local";
 import { db } from "./database";
 import LandingPage from "./LandingPage";
 import SplashScreen from "./SplashScreen";
-import { profile_create, profile_read } from "~/server";
+import { profile_create, profile_get_jwt, profile_read } from "~/server";
 const names = [
   "Sir Eatsalot",
   "Twigslayer",
@@ -40,7 +41,18 @@ async function loadGuestProfile() {
   let profile_jwt_token: any = await ls_host.getItem("profile_jwt_token");
   if (profile_jwt_token) {
   } else {
+    let device_id: string | null = await ls_host.getItem("device_id");
+    if (!device_id) {
+      // "Unique" id to more accurately estimate number of people with guest accounts
+      // Since we recreate the guest profile on each sign in / sign out
+      // the guest profiles created on a same device will have the same device id (until cookie is deleted)
+      // Note: Very non evasive & abusable
+      device_id = crypto.randomUUID();
+      ls_host.setItem("device_id", device_id);
+    }
+
     const random_default_profile: Partial<Profile> = {
+      device_id,
       avatar_src: `${window.location.origin}/default-avatar.svg`,
       banner_src: `${window.location.origin}/default-banner.jpg`,
       contacts: [],
@@ -69,6 +81,8 @@ export function Auth(props: { children?: JSX.Element }) {
   });
 
   createEffect(() => {
+    if (signedOut()) return;
+
     const _auth = auth();
     if (!_auth) return;
 
@@ -79,6 +93,9 @@ export function Auth(props: { children?: JSX.Element }) {
     }
 
     setLaunchApp(true);
+
+    const refresh_token = user()?.refresh_token;
+    if (!refresh_token) return;
     const unsubcribe = db.subscribeQuery(
       {
         profiles: {
@@ -91,11 +108,17 @@ export function Auth(props: { children?: JSX.Element }) {
       },
       async (result) => {
         if (signedOut()) return;
+
         const p = result.data?.profiles[0];
         if (p) {
           console.log("setting profile", p);
           setProfile(p);
-          await ls_host.removeItem("profile_jwt_token");
+
+          const profile_jwt_token = await profile_get_jwt(refresh_token);
+          await ls_host.setItem("profile_jwt_token", profile_jwt_token);
+          setProfileJwtToken(profile_jwt_token);
+
+          console.log("profile_get_jwt", profile_jwt_token);
           return;
         }
 

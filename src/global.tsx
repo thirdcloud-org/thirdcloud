@@ -102,6 +102,7 @@ declare global {
     value: string;
   };
   export interface Profile {
+    device_id: string;
     id: string;
     name: string;
     role: string;
