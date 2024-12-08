@@ -1,5 +1,5 @@
 import { DropdownMenu } from "@kobalte/core/dropdown-menu";
-import { BsPersonFill, BsPlusLg } from "solid-icons/bs";
+import { BsGearFill, BsPersonFill, BsPlusLg } from "solid-icons/bs";
 import { VsLoading, VsPassFilled } from "solid-icons/vs";
 import { createEffect, createSignal, For, JSX, onMount, Show } from "solid-js";
 import { appMetas, enabledInstallations } from "~/components/apps";
@@ -83,7 +83,7 @@ export default function AppBar() {
         </TabTrigger>
         <TabTrigger id="profile">
           <div class="p-2">
-            <BsPersonFill class="w-6 h-6 " />
+            <BsGearFill class="w-6 h-6 " />
           </div>
         </TabTrigger>
 

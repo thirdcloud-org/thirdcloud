@@ -9,6 +9,7 @@ import TabAddSidebar from "~/components/tabs/add/TabAddSidebar";
 import TabGenericBody from "~/components/tabs/generic/TabGenericBody";
 import TabGenericSidebar from "~/components/tabs/generic/TabGenericSidebar";
 import TabProfileBody from "~/components/tabs/profile/TabProfileBody";
+import TabProfileSidebar from "~/components/tabs/profile/TabProfileSidebar";
 
 function TabContent(props: { children?: JSX.Element; id: string }) {
   return (
@@ -25,7 +26,7 @@ export default function Home() {
   return (
     <Layout>
       <TabContent id="profile">
-        <AppLayout>
+        <AppLayout sidebar={<TabProfileSidebar />}>
           <TabProfileBody />
         </AppLayout>
       </TabContent>

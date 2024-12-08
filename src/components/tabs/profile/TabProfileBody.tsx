@@ -5,7 +5,13 @@ import Button from "~/components/Button";
 import { Contact, db } from "~/components/database";
 import EditProfileButton from "~/components/EditProfileButton";
 import SignInButton from "~/components/SignInButton";
-import { profile, signed_in, user_contacts } from "~/global";
+import {
+  profile,
+  setAuth,
+  setSignedOut,
+  signed_in,
+  user_contacts,
+} from "~/global";
 
 function ContactRow(props: { c: Contact }) {
   const ui = {
@@ -44,13 +50,16 @@ export default function TabProfileBody() {
   return (
     <>
       <div class="flex-1">
-        <div class="bg-zinc-800 h-48"></div>
+        <img
+          src={profile().banner_src}
+          class="h-[33.33vh] max-h-72 w-full object-cover"
+        />
 
         <div class="px-6 pb-6 -translate-y-6 space-y-4">
           <div class="flex items-center space-x-4">
-            <div class="w-40 h-40 rounded-lg  border overflow-hidden">
+            <div class="w-40 h-40 overflow-hidden border">
               <img
-                src="/default-avatar.svg"
+                src={profile().avatar_src}
                 class="min-w-full min-h-full bg-zinc-930"
               />
             </div>
@@ -68,8 +77,11 @@ export default function TabProfileBody() {
                   <Button
                     class="btn btn-sm"
                     onClick={() => {
-                      db.auth.signOut();
-                      window.location.reload();
+                      setSignedOut(true);
+                      setTimeout(() => {
+                        db.auth.signOut();
+                        window.location.reload();
+                      }, 200);
                     }}
                   >
                     Sign Out

@@ -1,65 +1,35 @@
+import { tx } from "@instantdb/core";
 import { createEffect, JSX, onCleanup, onMount, Show } from "solid-js";
 import {
-  _setProfile,
   auth,
   launchApp,
   profile,
   setAuth,
-  setGuestProfile,
   setLaunchApp,
-  user_id,
+  setProfile,
+  signedOut,
 } from "~/global";
+import { ls_host } from "~/local";
+import { profile_create, profile_read } from "~/server";
 import { db, Profile } from "./database";
 import LandingPage from "./LandingPage";
 import SplashScreen from "./SplashScreen";
-import { ls_host } from "~/local";
+import { loadGuestProfile } from "./guest_profile";
 
 export function Auth(props: { children?: JSX.Element }) {
   onMount(() => {
-    console.log("setup");
     db.subscribeAuth(async (auth) => {
-      console.log("got auth", auth);
       setAuth(auth);
     });
   });
 
-  onMount(async () => {
-    const names = [
-      "Sir Eatsalot",
-      "Twigslayer",
-      "Goldpocket",
-      "Sizzlebeard",
-      "Iron Knees",
-      "Thunderbolt",
-      "Sneaky Socks",
-      "Cuddlebug",
-    ];
-
-    const local_guest_profile = (await ls_host.getItem(
-      "guest_profile"
-    )) as Profile;
-    if (local_guest_profile) {
-      setGuestProfile(local_guest_profile);
-    } else {
-      const random_default_profile: Profile = {
-        id: crypto.randomUUID(),
-        avatar_url: `${window.location.origin}/default-avatar.svg`,
-        contacts: [],
-        description: "Hello everyone.",
-        name: names[Math.floor(Math.random() * names.length)],
-        role: "ThirdCloud User",
-      };
-
-      ls_host.setItem("guest_profile", random_default_profile);
-
-      setGuestProfile(random_default_profile);
-    }
-  });
-
   createEffect(() => {
-    const id = user_id();
+    const _auth = auth();
+    if (!_auth) return;
+
+    const id = auth()?.user?.id;
     if (!id) {
-      _setProfile();
+      loadGuestProfile();
       return;
     }
 
@@ -69,13 +39,35 @@ export function Auth(props: { children?: JSX.Element }) {
         profiles: {
           $: {
             where: {
-              id,
+              "$users.id": id,
             },
           },
         },
       },
-      (result) => {
-        _setProfile(result.data?.profiles[0]);
+      async (result) => {
+        if (signedOut()) return;
+        const p = result.data?.profiles[0];
+        if (p) {
+          console.log("setting profile", p);
+          setProfile(p);
+          await ls_host.removeItem("profile_jwt_token");
+          return;
+        }
+
+        // Flow: guest profile created, user loggin
+        // 1. If there is a cloud profile, load it to replace guest profile
+        // 2. If there is no cloud profile, link guest profile to user
+        // Case 2 has some edge cases:
+        // 1. User signs in before cloud profile is created -> hence await loadGuestProfile
+        // 2. If cloud profile is deleted for some reason, the user will now link to a guest profile
+        await loadGuestProfile();
+
+        console.log(`linking profile ${profile().id} with user ${id}`);
+        db.transact(
+          tx.profiles[profile().id].link({
+            $users: id,
+          })
+        );
       }
     );
 
@@ -85,7 +77,9 @@ export function Auth(props: { children?: JSX.Element }) {
   });
 
   return (
-    // When we have auth (know if user is logged in or not to show landing page) and profile (local guest profile is loaded)
+    // Either
+    // 1. Do not have user, created a cloud guest profile
+    // 2. Have a user, found their profile
     <Show fallback={<SplashScreen />} when={auth() && profile()}>
       <Show fallback={<LandingPage />} when={launchApp()}>
         {props.children}

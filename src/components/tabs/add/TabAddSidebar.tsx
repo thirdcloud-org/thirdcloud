@@ -21,7 +21,7 @@ export default function TabAddSidebar() {
   return (
     <div class="overflow-y-auto overflow-x-hidden flex-1">
       <div class="flex items-center space-x-4 justify-between mx-4  ">
-        <div class="header py-4 ">apps</div>
+        <div class="header py-4 ">Apps</div>
         {/* <div data-show={!isSearching()} class="flex-1 hidden data-[show=true]:block" /> */}
         <div
           data-show={isSearching()}

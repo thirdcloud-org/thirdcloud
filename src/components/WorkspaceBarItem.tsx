@@ -1,20 +1,21 @@
 import { createSignal, For, Show } from "solid-js";
 
-import { tx } from "@instantdb/core";
+import { id, tx } from "@instantdb/core";
 import { Dialog } from "@kobalte/core/dialog";
 import { DropdownMenu } from "@kobalte/core/dropdown-menu";
-import { BsBuildingFill, BsPlusLg } from "solid-icons/bs";
+import { BsChevronExpand, BsPlusLg } from "solid-icons/bs";
 import { VsLoading, VsPassFilled } from "solid-icons/vs";
 import Button from "~/components/Button";
-import { db } from "~/components/database";
-import { orgs, selectedOrg } from "./orgs";
-import { sortedTasks } from "./tasks";
+import { db, Workspace } from "~/components/database";
+
 import { createStore } from "solid-js/store";
+import { showToast } from "~/toast";
+import { sortedTasks } from "./tasks";
+import { selectedWorkspace, workspaces } from "./workspace";
+import { profile } from "~/global";
 
-type Organization = any;
-
-export default function OrgBarItem() {
-  const [store, setStore] = createStore<Partial<Organization>>({
+export default function WorkspaceBarItem() {
+  const [store, setStore] = createStore<Partial<Workspace>>({
     name: "",
   });
 
@@ -29,7 +30,7 @@ export default function OrgBarItem() {
               <div class="p-4 space-y-6">
                 <div class="dialog__header">
                   <Dialog.Title class="font-semibold text-xl">
-                    Create a new organization
+                    Create a new workspace
                   </Dialog.Title>
                 </div>
 
@@ -51,31 +52,25 @@ export default function OrgBarItem() {
                       class="form-input"
                     />
                   </div>
-
-                  <For each={store.contacts}>
-                    {(c, i) => (
-                      <div class="space-y-2">
-                        <div class="font-medium">Phone number</div>
-                        <input
-                          value={c.value}
-                          onInput={(e) => {
-                            setStore("contacts", i(), "value", e.target.value);
-                          }}
-                          class="form-input"
-                        />
-                      </div>
-                    )}
-                  </For>
                 </div>
               </div>
 
               <div class="p-4 bg-zinc-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
                 <Button
                   onClick={async () => {
-                    // const result = await db.transact([
-                    //   tx.profiles[_user().id].update(store),
-                    // ]);
-                    // console.log("update profile result", result);
+                    const profile_id = profile().id;
+                    const result = await db.transact([
+                      tx.workspaces[id()].update(store).link({
+                        profiles: profile_id,
+                      }),
+                    ]);
+                    console.log("created new workspace", result, profile_id);
+
+                    showToast({
+                      title: `Workspace "${store.name}" created`,
+                      description: "You can now switch to it.",
+                      type: "success",
+                    });
                     setOpen(false);
                   }}
                   class="btn btn-inverted"
@@ -98,9 +93,9 @@ export default function OrgBarItem() {
 
       <DropdownMenu>
         <DropdownMenu.Trigger class="py-1 px-2 select-none flex items-center space-x-1 text-zinc-500 hover:text-white duration-150">
-          <BsBuildingFill class="w-3 h-3" />
+          <BsChevronExpand class="w-3 h-3" />
           <div class="max-w-28 truncate">
-            {selectedOrg()?.name ?? "No Organization"}
+            {selectedWorkspace()?.name ?? "No Workspace"}
           </div>
         </DropdownMenu.Trigger>
 
@@ -112,18 +107,18 @@ export default function OrgBarItem() {
               }}
               class="px-4 py-2 flex items-center space-x-1 hover:text-white header c-description duration-150 cursor-pointer"
             >
-              <div>Organizations</div>
+              <div>Workspaces</div>
 
               <BsPlusLg class="w-4 h-4" />
             </div>
 
             <div class="max-w-[300px]">
               <Show
-                when={orgs().length > 0}
+                when={workspaces().length > 0}
                 fallback={
                   <div class="p-2 px-4 ">
                     <span class="text-sm">
-                      It looks like you’re not part of any organization yet
+                      You don&apos;t have any workspaces yet
                     </span>
                   </div>
                 }

@@ -1,5 +1,5 @@
 import { AuthResult } from "@instantdb/core/dist/module/clientTypes";
-import { createSignal } from "solid-js";
+import { createSignal, observable } from "solid-js";
 import { Profile } from "./components/database";
 import useOverlay from "./components/UseOverlay";
 import { CompileResult } from "./lib/compiler";
@@ -11,22 +11,18 @@ export const sw: () => Omit<ServiceWorker, "postMessage"> & {
 } = () => navigator.serviceWorker.controller!;
 
 export const [launchApp, setLaunchApp] = createSignal<boolean>(false);
+export const [signedOut, setSignedOut] = createSignal<boolean>(false);
 export const [auth, setAuth] = createSignal<AuthResult>();
-
 export const user = () => auth()?.user;
-export const [_profile, _setProfile] = createSignal<Profile>();
-
-export const user_id = () => auth()?.user?.id;
-export const signed_in = () => !!user_id();
+export const [_profile, setProfile] = createSignal<Profile>();
+export const profile = () => _profile()!;
+export const signed_in = () => !!auth()?.user?.id;
 export const user_contacts = () => {
   const u = user();
   const result = [...profile().contacts];
   if (u) result.push({ type: "email", value: u.email });
   return result;
 };
-
-export const [guestProfile, setGuestProfile] = createSignal<Profile>();
-export const profile = (): Profile => _profile() ?? guestProfile()!;
 
 export type AppMessage = any;
 

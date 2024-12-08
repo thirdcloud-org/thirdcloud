@@ -6,7 +6,7 @@ import { code, email, setCode } from "./authflow";
 
 import { Dialog } from "@kobalte/core/dialog";
 import { setFlow, setOpen } from "./authflow";
-import { profile } from "~/global";
+import { profile, setProfile } from "~/global";
 import { showToast } from "~/toast";
 
 export default function RequireCode() {
@@ -43,7 +43,8 @@ export default function RequireCode() {
               }}
               placeholder="XXXXXX"
               class="outline-none  
-              min-w-0 
+              min-w-0
+              w-full 
               px-4 py-2
               placeholder-zinc-500
               text-sm caret-zinc-500 bg-transparent"
@@ -69,28 +70,50 @@ export default function RequireCode() {
               if (_signin.user) {
                 console.log("_signin", _signin);
 
-                const { data } = await db.queryOnce({
-                  profiles: {
-                    $: {
-                      where: {
-                        id: _signin.user.id,
-                      },
-                    },
-                  },
-                });
+                // const { data } = await db.queryOnce({
+                //     profiles: {
+                //       $: {
+                //         where: {
+                //           '$users.id': _signin.user.id,
+                //         },
+                //       },
+                //     },
+                //   });
 
-                if (data.profiles[0]) {
-                  // Already have profile
-                  // no-op, do not overwrite cloud profile,
-                  // and let Auth component reactively update _profile
-                  console.log("already have profile", data.profiles[0]);
-                } else {
-                  const p = profile();
-                  const result = await db.transact([
-                    tx.profiles[_signin.user.id].update(p as any),
-                  ]);
-                  console.log("created profile result", result);
-                }
+                //   const p = data.profiles.at(0);
+                //   if (p) {
+                //     // no-op, let Auth component load the correct profile (again)
+                //   } else {
+                //     // link
+                //     const p = profile();
+                //     const result = await db.transact([
+                //       tx.profiles[_signin.user.id].update(p as any),
+                //     ]);
+                //     console.log("created profile result", result);
+                //   }
+
+                // const { data } = await db.queryOnce({
+                //   profiles: {
+                //     $: {
+                //       where: {
+                //         id: _signin.user.id,
+                //       },
+                //     },
+                //   },
+                // });
+
+                // if (data.profiles[0]) {
+                //   // Already have a user linked to this profile
+                //   // no-op, let Auth component reactively update _profile
+                //   console.log("already have profile", data.profiles[0]);
+                // } else {
+                //   // link
+                //   // const p = profile();
+                //   // const result = await db.transact([
+                //   //   tx.profiles[_signin.user.id].update(p as any),
+                //   // ]);
+                //   // console.log("created profile result", result);
+                // }
 
                 showToast({
                   title: "Signed In",
