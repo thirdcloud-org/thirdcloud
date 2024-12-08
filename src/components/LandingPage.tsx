@@ -126,7 +126,7 @@ export default function LandingPage() {
         {/* Extensions Section */}
         <section class="py-16 text-center space-y-8">
           <div class="space-y-2 ">
-            <h2 class="text-4xl text-neutral-400">
+            <h2 class="text-4xl text-neutral-400  px-2">
               Extend ThirdCloud with{" "}
               <span class="text-white font-semibold">third-party apps</span>
             </h2>
@@ -252,8 +252,6 @@ export default function LandingPage() {
             <div class="space-y-1">
               <h3 class="font-semibold text-2xl">Proudly Open Source</h3>
               <p class="text-neutral-400">
-                ThirdCloud welcomes contributions and feedback.
-                <br />
                 Join us and shape the future of collaborative work!
               </p>
             </div>
