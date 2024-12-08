@@ -3,6 +3,7 @@ import { createEffect, createSignal, JSX, onCleanup, onMount } from "solid-js";
 import { installations, setInstallations } from "~/components/apps";
 import { profile } from "~/global";
 import { ls_host_installations } from "~/local";
+import { showToast } from "~/toast";
 import CreateWorkspaceDialog from "./CreateWorkspaceDialog";
 import { db } from "./database";
 import {
@@ -11,15 +12,17 @@ import {
   setSelectedWorkspaceId,
   setWorkspaces,
 } from "./workspace";
-import { showToast } from "~/toast";
 
 export default function MainApp(props: { children?: JSX.Element }) {
   const [loaded, setLoaded] = createSignal(false);
   const [open, setOpen] = createSignal(false);
 
-  onMount(async () => {
+  let runOnce = false;
+  createEffect(async () => {
     const _loaded = loaded();
     if (_loaded) return;
+    if (runOnce) return;
+    runOnce = true;
 
     const keys = await ls_host_installations.keys();
     const serializeds = await Promise.all(
