@@ -15,8 +15,7 @@ export const appMetas: AppMeta[] = [
   {
     id: "0000-0000-0000-0001",
     name: "Chat Hub",
-    description:
-      "Centralize team communication with threads, channels, and real-time messaging.",
+    description: "Chat and get things done",
     readme: `
 The Chat Hub centralizes team messaging, providing an efficient, real-time communication platform to enhance collaboration. Ideal for remote teams, it allows structured conversations in channels and threads, ensuring organized and efficient exchanges.
 
@@ -40,9 +39,8 @@ The Chat Hub centralizes team messaging, providing an efficient, real-time commu
   },
   {
     id: "0000-0000-0000-0002",
-    name: "Project Management Board",
-    description:
-      "Plan, organize, and track projects with Kanban boards and Gantt charts.",
+    name: "Project Management",
+    description: "Kanban boards and Gantt charts",
     readme: `
 A comprehensive project management tool, the Project Management Board organizes tasks, assigns deadlines, and tracks project progress. Using both Kanban boards and Gantt charts, this app provides teams with flexibility to manage tasks efficiently and meet project goals.
 
@@ -65,8 +63,8 @@ A comprehensive project management tool, the Project Management Board organizes 
   },
   {
     id: "0000-0000-0000-0003",
-    name: "Collaborative Notes",
-    description: "Real-time note-taking with templates and rich text editing.",
+    name: "Notes",
+    description: "Collaborative rich text editing",
     readme: `
 Collaborative Notes allows team members to create, edit, and share notes in real-time. Designed for brainstorming, meeting notes, and documentation, it includes rich text formatting and customizable templates for structured note-taking.
 
@@ -90,8 +88,7 @@ Collaborative Notes allows team members to create, edit, and share notes in real
   {
     id: "0000-0000-0000-0005",
     name: "Whiteboard",
-    description:
-      "Collaborative whiteboard for brainstorming and visual note-taking.",
+    description: "Brainstorm with teammates",
     readme: `
 The Whiteboard app offers a digital space for brainstorming and visual collaboration. Users can draw, add sticky notes, and collaborate on ideas, perfect for creative brainstorming and design discussions.
 
