@@ -36,9 +36,7 @@ async function loadGuestProfile() {
   }
   callOnce = true;
   setProfile();
-  let profile_jwt_token: string | null = await ls_host.getItem(
-    "profile_jwt_token"
-  );
+  let profile_jwt_token: any = await ls_host.getItem("profile_jwt_token");
   if (profile_jwt_token) {
   } else {
     const random_default_profile: Partial<Profile> = {
