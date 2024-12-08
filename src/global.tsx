@@ -15,6 +15,8 @@ export const [signedOut, setSignedOut] = createSignal<boolean>(false);
 export const [auth, setAuth] = createSignal<AuthResult>();
 export const user = () => auth()?.user;
 export const [_profile, setProfile] = createSignal<Profile>();
+export const [_profileJwtToken, setProfileJwtToken] = createSignal<string>();
+export const profileJwtToken = () => _profileJwtToken()!;
 export const profile = () => _profile()!;
 export const signed_in = () => !!auth()?.user?.id;
 export const user_contacts = () => {

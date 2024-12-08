@@ -1,13 +1,11 @@
-import { tx } from "@instantdb/core";
 import { Dialog } from "@kobalte/core/dialog";
 import { BsPencilFill } from "solid-icons/bs";
 import { createEffect, createSignal, For } from "solid-js";
 import { createStore } from "solid-js/store";
 import Button from "~/components/Button";
-import { db, Profile } from "~/components/database";
-import { profile, setProfile } from "~/global";
+import { Profile } from "~/components/database";
+import { profile, profileJwtToken, setProfile } from "~/global";
 import { profile_update } from "~/server";
-import { profile_jwt_token } from "./guest_profile";
 export default function EditProfileButton() {
   const [store, setStore] = createStore<Partial<Profile>>({});
 
@@ -82,6 +80,7 @@ export default function EditProfileButton() {
                 <Button
                   onClick={async () => {
                     const id = profile().id;
+                    const profile_jwt_token = profileJwtToken();
                     if (!profile_jwt_token)
                       throw new Error("Client has no profile_jwt_token");
                     profile_update(profile_jwt_token, id, store);

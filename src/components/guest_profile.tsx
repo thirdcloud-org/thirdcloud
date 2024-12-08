@@ -1,4 +1,4 @@
-import { setProfile } from "~/global";
+import { setProfile, setProfileJwtToken } from "~/global";
 import { ls_host } from "~/local";
 import { profile_create, profile_read } from "~/server";
 import { Profile } from "./database";
@@ -13,7 +13,7 @@ const names = [
   "Sneaky Socks",
   "Cuddlebug",
 ];
-export let profile_jwt_token: string | null = null;
+
 let callOnce = false;
 let resolve_done: (vale: unknown) => void;
 const promise_result = new Promise((resolve) => {
@@ -27,7 +27,9 @@ export const loadGuestProfile = async () => {
   callOnce = true;
 
   setProfile();
-  profile_jwt_token = await ls_host.getItem("profile_jwt_token");
+  let profile_jwt_token: string | null = await ls_host.getItem(
+    "profile_jwt_token"
+  );
 
   if (profile_jwt_token) {
   } else {
@@ -51,6 +53,7 @@ export const loadGuestProfile = async () => {
   const profile = await profile_read(profile_jwt_token);
   console.log("profile", profile);
 
+  setProfileJwtToken(profile_jwt_token);
   setProfile(profile as Profile);
   resolve_done(profile);
 };
