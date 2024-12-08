@@ -112,6 +112,24 @@ export async function profile_update(jwt_token: string, data: any) {
   return result;
 }
 
+export async function profile_create_workspace(
+  jwt_token: string,
+  workspace: Partial<Workspace>
+) {
+  "use server";
+  const profile_id = await checkPermission(jwt_token);
+  const db = instantdb();
+  const workspace_id = id();
+  const result = await db.transact([
+    tx.workspaces[workspace_id].update(workspace).link({
+      profiles: profile_id,
+    }),
+  ]);
+
+  console.log("workspace created", result);
+  return workspace_id;
+}
+
 export async function profile_delete(secret: string, id: string) {
   throw new Error("Not implemented");
 }

@@ -45,3 +45,8 @@ export const showToast = (_props: {
 
   return id;
 };
+
+if (typeof window !== "undefined") {
+  // @ts-ignore
+  window.showToast = showToast;
+}

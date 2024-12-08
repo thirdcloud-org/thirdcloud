@@ -149,7 +149,8 @@ export default function LandingPage() {
               <span class="avoidwrap">without breaking the bank</span>
             </h2>
             <p class="text-neutral-500">
-              ThirdCloud brings your tools and data together
+              ThirdCloud brings your tools{" "}
+              <span class="avoidwrap">and data together</span>
             </p>
           </div>
           <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
