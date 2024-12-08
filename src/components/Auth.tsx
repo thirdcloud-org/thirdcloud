@@ -14,7 +14,7 @@ import { profile_create, profile_read } from "~/server";
 import { db, Profile } from "./database";
 import LandingPage from "./LandingPage";
 import SplashScreen from "./SplashScreen";
-import { loadGuestProfile } from "./guest_profile";
+// import { loadGuestProfile } from "./guest_profile";
 
 export function Auth(props: { children?: JSX.Element }) {
   onMount(() => {
@@ -29,7 +29,7 @@ export function Auth(props: { children?: JSX.Element }) {
 
     const id = auth()?.user?.id;
     if (!id) {
-      loadGuestProfile();
+      // loadGuestProfile();
       return;
     }
 
@@ -60,7 +60,7 @@ export function Auth(props: { children?: JSX.Element }) {
         // Case 2 has some edge cases:
         // 1. User signs in before cloud profile is created -> hence await loadGuestProfile
         // 2. If cloud profile is deleted for some reason, the user will now link to a guest profile
-        await loadGuestProfile();
+        // await loadGuestProfile();
 
         console.log(`linking profile ${profile().id} with user ${id}`);
         db.transact(
