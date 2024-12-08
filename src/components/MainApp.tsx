@@ -1,5 +1,12 @@
 import { deserialize } from "seroval";
-import { createEffect, createSignal, JSX, onCleanup, onMount } from "solid-js";
+import {
+  batch,
+  createEffect,
+  createSignal,
+  JSX,
+  onCleanup,
+  onMount,
+} from "solid-js";
 import { installations, setInstallations } from "~/components/apps";
 import { profile } from "~/global";
 import { ls_host_installations } from "~/local";
@@ -94,6 +101,13 @@ export default function MainApp(props: { children?: JSX.Element }) {
           return;
         }
 
+        if (open()) return;
+
+        console.log(
+          "_selectedWorkspaceId()",
+          _selectedWorkspaceId(),
+          _workspaces
+        );
         if (_selectedWorkspaceId()) {
           showToast({
             title: "Workspace not found",
@@ -104,11 +118,9 @@ export default function MainApp(props: { children?: JSX.Element }) {
 
         // Default
         const firstWorkspace = _workspaces.at(0);
-        console.log("firstWorkspace", firstWorkspace);
         if (firstWorkspace) {
           setSelectedWorkspaceId(firstWorkspace.id);
           setLoaded(true);
-          setOpen(false);
         } else {
           setOpen(true);
         }
@@ -134,7 +146,17 @@ export default function MainApp(props: { children?: JSX.Element }) {
         open={open}
         setOpen={safeSetOpen}
         compulsory
-        switchAfterCreated
+        onCreated={async (workspace) => {
+          batch(() => {
+            setSelectedWorkspaceId(workspace.id);
+            setOpen(false);
+          });
+          showToast({
+            title: `Workspace "${workspace.name}" created`,
+            description: "You can now switch to it",
+            type: "success",
+          });
+        }}
       />
       <div class="animate-fade">{props.children}</div>
     </>

@@ -11,8 +11,7 @@ export default function CreateWorkspaceDialog(props: {
   setOpen: Setter<boolean>;
   compulsory?: boolean;
   onCancel?: () => void;
-  onCreated?: (workspace: Partial<Workspace>) => void;
-  switchAfterCreated?: boolean;
+  onCreated?: (workspace: Partial<Workspace>) => Promise<void>;
 }) {
   const [store, setStore] = createStore<Partial<Workspace>>({
     name: "",
@@ -75,26 +74,17 @@ export default function CreateWorkspaceDialog(props: {
                     jwt_token,
                     workspace
                   );
+
                   console.log(
                     "created new workspace",
                     workspace_id,
                     profile_id
                   );
 
-                  showToast({
-                    title: `Workspace "${workspace.name}" created`,
-                    description: props.switchAfterCreated
-                      ? "You have been added to it"
-                      : "You can now switch to it",
-                    type: "success",
-                  });
-
-                  props.onCreated?.({
+                  await props.onCreated?.({
                     ...workspace,
                     id: workspace_id,
                   });
-
-                  props.setOpen(false);
                 }}
                 class="btn btn-inverted"
               >

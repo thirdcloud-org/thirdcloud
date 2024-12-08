@@ -39,7 +39,19 @@ export default function WorkspaceBarItem() {
   const [open, setOpen] = createSignal(false);
   return (
     <>
-      <CreateWorkspaceDialog open={open} setOpen={setOpen} />
+      <CreateWorkspaceDialog
+        open={open}
+        setOpen={setOpen}
+        onCreated={async (workspace) => {
+          showToast({
+            title: `Workspace "${workspace.name}" created`,
+            description: "You can now switch to it",
+            type: "success",
+          });
+
+          setOpen(false);
+        }}
+      />
 
       <DropdownMenu>
         <Show when={selectedWorkspace()}>
