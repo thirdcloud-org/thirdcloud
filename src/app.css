@@ -202,6 +202,10 @@ body {
   @apply hover:bg-zinc-900 data-[selected=true]:bg-zinc-900;
 }
 
+.v-hover-highlight-sidebar {
+  @apply hover:bg-zinc-900 data-[selected=true]:bg-[#8a5cf5];
+}
+
 .el {
   @apply bg-zinc-900 shadow-lg hover:bg-zinc-800 disabled:hover:bg-zinc-900 disabled:opacity-50 disabled:cursor-not-allowed  data-[active=true]:bg-zinc-800 data-[active=true]:text-white hover:text-white disabled:hover:text-zinc-400 text-zinc-400 duration-150;
 }
@@ -238,7 +242,7 @@ body {
 }
 
 .header {
-  @apply uppercase tracking-tight text-sm;
+  @apply font-semibold tracking-tight text-sm text-zinc-500;
 }
 .dialog__overlay {
   position: fixed;

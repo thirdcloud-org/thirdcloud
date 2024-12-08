@@ -33,8 +33,14 @@ export interface Profile {
   role: string;
   description: string;
   contacts: Contact[];
-  avatar_url: string;
+  avatar_src: string;
+  banner_src: string;
 }
+
+export type Workspace = {
+  id: string;
+  name: string;
+};
 
 type RoomSchema = any;
 // // Provide a room schema to get typings for presence!

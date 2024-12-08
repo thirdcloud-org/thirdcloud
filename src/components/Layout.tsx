@@ -4,7 +4,7 @@ import { Tabs } from "@kobalte/core/tabs";
 import { bodyOverlay } from "~/global";
 import AppBar from "./AppBar";
 import NotificationBarItem from "./NotificationBarItem";
-import OrgBarItem from "./OrgBarItem";
+import WorkspaceBarItem from "./WorkspaceBarItem";
 
 export default function Layout(props: { children?: JSX.Element }) {
   return (
@@ -22,7 +22,7 @@ export default function Layout(props: { children?: JSX.Element }) {
           <div class="flex-1 overflow-hidden">{props.children}</div>
 
           <div class="bg-zinc-930 border-t text-xs flex-none flex items-center flex-row-reverse">
-            <OrgBarItem />
+            <WorkspaceBarItem />
             <NotificationBarItem />
           </div>
         </div>

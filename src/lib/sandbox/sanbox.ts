@@ -1,12 +1,12 @@
 import { ModuleSource } from "@endo/module-source";
 import { VirtualEnvironment } from "@locker/near-membrane-base";
+import localforage from "localforage";
 import "ses";
-import { createSESVirtualEnvironment } from "../ses-membrane";
-import { serialize } from "seroval";
+import { observable } from "solid-js";
 import { getResolvePathFunction, installationOf } from "~/components/apps";
 import { profile } from "~/global";
+import { createSESVirtualEnvironment } from "../ses-membrane";
 import { transform } from "./transform";
-import localforage from "localforage";
 
 declare global {
   interface Window {
@@ -116,10 +116,7 @@ export class Sandbox {
       id: this.id,
       globals: {
         $host: harden({
-          users: [],
-          profile: () => {
-            return profile?.();
-          },
+          $profile: observable(profile),
         }),
         $host_import_meta: {
           url: (specifier: string) => {
