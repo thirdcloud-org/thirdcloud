@@ -1,5 +1,3 @@
-"use server";
-
 import { id, init, tx } from "@instantdb/admin";
 import jwt from "jsonwebtoken";
 import { getRequestEvent } from "solid-js/web";
@@ -22,6 +20,7 @@ function instantdb() {
 
 // Since we allow guest profiles, CRUD on profiles needs to be server-side
 export async function profile_read(jwt_token: string) {
+  "use server";
   const decoded = jwt.verify(jwt_token, getSecretKey("JWT_SECRET_KEY"));
   const { table, id: profile_id } = decoded as {
     table: string;
@@ -48,6 +47,7 @@ export async function profile_read(jwt_token: string) {
 }
 
 export async function profile_create(data: any) {
+  "use server";
   const JWT_SECRET_KEY = getSecretKey("JWT_SECRET_KEY");
   const db = instantdb();
   const profile_id = id();
