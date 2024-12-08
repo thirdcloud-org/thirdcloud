@@ -7,13 +7,14 @@ import {
   setAuth,
   setLaunchApp,
   setProfile,
+  setProfileJwtToken,
   signedOut,
 } from "~/global";
 import { ls_host } from "~/local";
 import { db, Profile } from "./database";
 import LandingPage from "./LandingPage";
 import SplashScreen from "./SplashScreen";
-import { profile_create } from "~/server";
+import { profile_create, profile_read } from "~/server";
 const names = [
   "Sir Eatsalot",
   "Twigslayer",
@@ -49,14 +50,14 @@ async function loadGuestProfile() {
     };
     console.log("call profile_create");
     profile_jwt_token = await profile_create(random_default_profile);
-    // console.log("profile_jwt_token", profile_jwt_token);
-    // ls_host.setItem("profile_jwt_token", profile_jwt_token);
+    console.log("profile_jwt_token", profile_jwt_token);
+    ls_host.setItem("profile_jwt_token", profile_jwt_token);
   }
   console.log("call profile_read");
-  // const profile = await profile_read(profile_jwt_token);
+  const profile = await profile_read(profile_jwt_token);
   console.log("profile", profile);
-  // setProfileJwtToken(profile_jwt_token);
-  // setProfile(profile as Profile);
+  setProfileJwtToken(profile_jwt_token);
+  setProfile(profile as Profile);
   resolve_done(profile);
 }
 

@@ -1,7 +1,9 @@
 import { id, init, tx } from "@instantdb/admin";
-import jwt from "jsonwebtoken";
+import * as jose from "jose";
 import { getRequestEvent } from "solid-js/web";
 // import { Profile } from "./components/database";
+
+const str_to_uint8arr = (str: string) => new TextEncoder().encode(str);
 
 function getSecretKey(name: string) {
   const event = getRequestEvent();
@@ -21,55 +23,56 @@ function instantdb() {
 // Since we allow guest profiles, CRUD on profiles needs to be server-side
 export async function profile_read(jwt_token: string) {
   "use server";
-  const decoded = jwt.verify(jwt_token, getSecretKey("JWT_SECRET_KEY"));
-  // const { table, id: profile_id } = decoded as {
-  //   table: string;
-  //   id: string;
-  // };
+  const JWT_SECRET_KEY = getSecretKey("JWT_SECRET_KEY");
+  const { payload } = await jose.jwtVerify(
+    jwt_token,
+    str_to_uint8arr(JWT_SECRET_KEY)
+  );
+  const { table, id: profile_id } = payload as {
+    table: string;
+    id: string;
+  };
+  console.log("payload", payload);
 
-  // if (table !== "profiles" || !profile_id) throw new Error("Invalid token");
+  if (table !== "profiles" || !profile_id) throw new Error("Invalid token");
 
-  // const db = instantdb();
-  // const data = await db.query({
-  //   profiles: {
-  //     $: {
-  //       where: {
-  //         id: profile_id,
-  //       },
-  //     },
-  //   },
-  // });
+  const db = instantdb();
+  const data = await db.query({
+    profiles: {
+      $: {
+        where: {
+          id: profile_id,
+        },
+      },
+    },
+  });
 
-  // const profile = data.profiles.at(0);
-  // if (!profile) throw new Error("Profile not found");
+  const profile = data.profiles.at(0);
+  if (!profile) throw new Error("Profile not found");
 
-  // return profile;
+  return profile;
 }
 
 export async function profile_create(data: any) {
   "use server";
-  // const JWT_SECRET_KEY = getSecretKey("JWT_SECRET_KEY");
-  // const db = instantdb();
-  // const profile_id = id();
-  // const result = await db.transact([tx.profiles[profile_id].update(data)]);
-  // console.log("created profile result", result);
-  // const token = jwt.sign(
-  //   {
-  //     table: "profiles",
-  //     id: profile_id,
-  //   },
-  //   JWT_SECRET_KEY
-  // );
-  // return token;
+  const JWT_SECRET_KEY = getSecretKey("JWT_SECRET_KEY");
+  const db = instantdb();
+  const profile_id = id();
+  const result = await db.transact([tx.profiles[profile_id].update(data)]);
+  console.log("created profile result", result);
+  const token = await new jose.SignJWT({ table: "profiles", id: profile_id })
+    .setProtectedHeader({ alg: "HS256" })
+    .sign(str_to_uint8arr(JWT_SECRET_KEY));
+  return token;
 }
 
-// export async function profile_update(secret: string, id: string, data: any) {
-//   const db = instantdb();
-//   const result = await db.transact(tx.profiles[id].update(data));
-//   console.log("profile updated", result);
-//   return result;
-// }
+export async function profile_update(secret: string, id: string, data: any) {
+  const db = instantdb();
+  const result = await db.transact(tx.profiles[id].update(data));
+  console.log("profile updated", result);
+  return result;
+}
 
-// export async function profile_delete(secret: string, id: string) {
-//   throw new Error("Not implemented");
-// }
+export async function profile_delete(secret: string, id: string) {
+  throw new Error("Not implemented");
+}
