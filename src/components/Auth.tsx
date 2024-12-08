@@ -17,14 +17,14 @@ import LandingPage from "./LandingPage";
 import SplashScreen from "./SplashScreen";
 import { profile_create, profile_get_jwt, profile_read } from "~/server";
 const names = [
-  "Sir Eatsalot",
-  "Twigslayer",
-  "Goldpocket",
-  "Sizzlebeard",
-  "Iron Knees",
-  "Thunderbolt",
-  "Sneaky Socks",
-  "Cuddlebug",
+  "Sir Thunderclap",
+  "Captain Cyclone",
+  "Prince Sunbeam",
+  "Storm Chaser",
+  "Rain Dancer",
+  "Lightning Lad",
+  "Lady Frostina",
+  "Queen Aurora",
 ];
 let callOnce = false;
 let resolve_done: (vale: unknown) => void;

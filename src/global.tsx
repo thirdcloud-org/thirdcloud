@@ -24,9 +24,8 @@ export const user_contacts = () => {
   if (u) result.push({ type: "email", value: u.email });
   return result;
 };
-
+// Types
 export type AppMessage = any;
-
 declare global {
   interface Window {
     sesLockedDown: boolean;
@@ -115,6 +114,7 @@ declare global {
   export type Workspace = {
     id: string;
     name: string;
+    color: string;
   };
 
   type RoomSchema = any;

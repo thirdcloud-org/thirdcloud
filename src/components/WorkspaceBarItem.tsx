@@ -4,17 +4,40 @@ import { id, tx } from "@instantdb/core";
 import { Dialog } from "@kobalte/core/dialog";
 import { DropdownMenu } from "@kobalte/core/dropdown-menu";
 import { BsChevronExpand, BsPlusLg } from "solid-icons/bs";
-import { VsLoading, VsPassFilled } from "solid-icons/vs";
 import Button from "~/components/Button";
 import { db } from "~/components/database";
 
 import { createStore } from "solid-js/store";
-import { showToast } from "~/toast";
-import { sortedTasks } from "./tasks";
 import { profile } from "~/global";
-import { selectedWorkspace, workspaces } from "./workspace";
+import { showToast } from "~/toast";
+import {
+  selectedWorkspace,
+  setSelectedWorkspaceId,
+  workspaces,
+} from "./workspace";
+
+function WorkspaceIcon(props: { w: Workspace; size: number }) {
+  return (
+    <div
+      class="rounded-full "
+      style={{
+        width: `${props.size}px`,
+        height: `${props.size}px`,
+        "background-color": props.w.color,
+      }}
+    />
+  );
+}
 
 export default function WorkspaceBarItem() {
+  const colors = [
+    "#fe776a",
+    "#fcbc53",
+    "#ffe55c",
+    "#6eff80",
+    "#369cff",
+    "#a77ab8",
+  ];
   const [store, setStore] = createStore<Partial<Workspace>>({
     name: "",
   });
@@ -59,15 +82,19 @@ export default function WorkspaceBarItem() {
                 <Button
                   onClick={async () => {
                     const profile_id = profile().id;
+                    const workspace = {
+                      ...store,
+                      color: colors[Math.floor(Math.random() * colors.length)],
+                    };
                     const result = await db.transact([
-                      tx.workspaces[id()].update(store).link({
+                      tx.workspaces[id()].update(workspace).link({
                         profiles: profile_id,
                       }),
                     ]);
                     console.log("created new workspace", result, profile_id);
 
                     showToast({
-                      title: `Workspace "${store.name}" created`,
+                      title: `Workspace "${workspace.name}" created`,
                       description: "You can now switch to it.",
                       type: "success",
                     });
@@ -93,7 +120,13 @@ export default function WorkspaceBarItem() {
 
       <DropdownMenu>
         <DropdownMenu.Trigger class="py-1 px-2 select-none flex items-center space-x-1 text-zinc-500 hover:text-white duration-150">
-          <BsChevronExpand class="w-3 h-3" />
+          <Show
+            fallback={<BsChevronExpand class="w-3 h-3" />}
+            when={selectedWorkspace()}
+          >
+            {(w) => <WorkspaceIcon w={w()} size={12} />}
+          </Show>
+
           <div class="max-w-28 truncate">
             {selectedWorkspace()?.name ?? "No Workspace"}
           </div>
@@ -124,24 +157,21 @@ export default function WorkspaceBarItem() {
                 }
               >
                 <div class="max-h-52 nice-scrollbar">
-                  <For each={sortedTasks()}>
-                    {(task) => (
-                      <div
-                        class="p-2 px-4 flex items-center space-x-2  data-[completed=false]:animate-pulse max-w-sm overflow-hidden"
-                        data-completed={task.completed ? true : false}
+                  <For each={workspaces()}>
+                    {(w) => (
+                      <button
+                        onClick={() => {
+                          setSelectedWorkspaceId(w.id);
+                          setOpen(false);
+                        }}
+                        data-selected={w.id == selectedWorkspace()?.id}
+                        class="w-full p-2 px-4 flex items-center space-x-2  max-w-sm overflow-hidden hover:bg-zinc-900 data-[selected=true]:bg-[#6321f2] rounded"
                       >
                         <div class="flex-none">
-                          <Show
-                            when={task.completed}
-                            fallback={
-                              <VsLoading class="w-4 h-4 animate-spin" />
-                            }
-                          >
-                            <VsPassFilled class="w-4 h-4" />
-                          </Show>
+                          <WorkspaceIcon w={w} size={16} />
                         </div>
-                        <div class="text-sm truncate">{task.description}</div>
-                      </div>
+                        <div class="text-sm truncate">{w.name}</div>
+                      </button>
                     )}
                   </For>
                 </div>
