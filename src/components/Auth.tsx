@@ -13,6 +13,7 @@ import { ls_host } from "~/local";
 import { db, Profile } from "./database";
 import LandingPage from "./LandingPage";
 import SplashScreen from "./SplashScreen";
+import { profile_create } from "~/server";
 const names = [
   "Sir Eatsalot",
   "Twigslayer",
@@ -49,7 +50,7 @@ async function loadGuestProfile() {
       role: "ThirdCloud User",
     };
     console.log("call profile_create");
-    // profile_jwt_token = await profile_create(random_default_profile);
+    profile_jwt_token = await profile_create(random_default_profile);
     // console.log("profile_jwt_token", profile_jwt_token);
     // ls_host.setItem("profile_jwt_token", profile_jwt_token);
   }
