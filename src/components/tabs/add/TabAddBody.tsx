@@ -56,7 +56,7 @@ function AppView(props: { app: AppMeta }) {
       <div class="divider my-4" />
       <div class="flex flex-start space-x-2 ">
         <div
-          class="prose prose-invert prose-zinc text-white max-w-none flex-1 "
+          class="prose prose-invert prose-neutral text-white max-w-none flex-1 "
           innerHTML={html()}
         />
       </div>

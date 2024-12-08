@@ -28,14 +28,14 @@ function ContactRow(props: { c: Contact }) {
 
   return (
     <div class="flex items-start space-x-4">
-      <div class="p-2 bg-zinc-900 border rounded">
+      <div class="p-2 bg-neutral-900 border rounded">
         <Dynamic
           component={ui[props.c.type].icon}
-          class="w-6 h-6 text-zinc-500"
+          class="w-6 h-6 text-neutral-500"
         />
       </div>
       <div>
-        <div class="text-sm text-zinc-400">{ui[props.c.type].label}</div>
+        <div class="text-sm text-neutral-400">{ui[props.c.type].label}</div>
         <Show
           fallback={<div class="c-description">N/A</div>}
           when={props.c.value}
@@ -61,7 +61,7 @@ export default function TabProfileBody() {
             <div class="w-40 h-40 overflow-hidden border">
               <img
                 src={profile().avatar_src}
-                class="min-w-full min-h-full bg-zinc-930"
+                class="min-w-full min-h-full bg-neutral-930"
               />
             </div>
 

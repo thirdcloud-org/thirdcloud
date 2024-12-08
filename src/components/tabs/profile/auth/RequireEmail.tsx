@@ -38,14 +38,14 @@ export default function RequireEmail() {
               class="outline-none  
           min-w-0 
           px-4 py-2
-          placeholder-zinc-500
-          text-sm caret-zinc-500 bg-transparent"
+          placeholder-neutral-500
+          text-sm caret-neutral-500 bg-transparent"
             />
           </div>
         </div>
       </div>
 
-      <div class="p-4 bg-zinc-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
+      <div class="p-4 bg-neutral-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
         <Button
           disabled={!email()}
           onClick={async () => {

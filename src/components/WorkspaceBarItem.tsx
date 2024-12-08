@@ -78,7 +78,7 @@ export default function WorkspaceBarItem() {
                 </div>
               </div>
 
-              <div class="p-4 bg-zinc-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
+              <div class="p-4 bg-neutral-970 border-t flex flex-row-reverse items-center space-x-2 space-x-reverse">
                 <Button
                   onClick={async () => {
                     const profile_id = profile().id;
@@ -119,7 +119,7 @@ export default function WorkspaceBarItem() {
       </Dialog>
 
       <DropdownMenu>
-        <DropdownMenu.Trigger class="py-1 px-2 select-none flex items-center space-x-1 text-zinc-500 hover:text-white duration-150">
+        <DropdownMenu.Trigger class="py-1 px-2 select-none flex items-center space-x-1 text-neutral-500 hover:text-white duration-150">
           <Show
             fallback={<BsChevronExpand class="w-3 h-3" />}
             when={selectedWorkspace()}
@@ -165,7 +165,7 @@ export default function WorkspaceBarItem() {
                           setOpen(false);
                         }}
                         data-selected={w.id == selectedWorkspace()?.id}
-                        class="w-full p-2 px-4 flex items-center space-x-2  max-w-sm overflow-hidden hover:bg-zinc-900 data-[selected=true]:bg-[#6321f2] rounded"
+                        class="w-full p-2 px-4 flex items-center space-x-2  max-w-sm overflow-hidden hover:bg-neutral-900 data-[selected=true]:bg-[#6321f2] rounded"
                       >
                         <div class="flex-none">
                           <WorkspaceIcon w={w} size={16} />

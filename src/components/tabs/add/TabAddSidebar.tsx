@@ -45,8 +45,8 @@ export default function TabAddSidebar() {
             placeholder="Search"
             class="outline-none  
             min-w-0 flex-none 
-            placeholder-zinc-500
-            data-[show=true]:flex-1  w-0 text-sm caret-zinc-500 bg-transparent"
+            placeholder-neutral-500
+            data-[show=true]:flex-1  w-0 text-sm caret-neutral-500 bg-transparent"
           />
         </div>
       </div>

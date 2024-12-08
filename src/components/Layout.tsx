@@ -21,7 +21,7 @@ export default function Layout(props: { children?: JSX.Element }) {
         <div class="h-full v-main flex flex-col border-l overflow-hidden">
           <div class="flex-1 overflow-hidden">{props.children}</div>
 
-          <div class="bg-zinc-930 border-t text-xs flex-none flex items-center flex-row-reverse">
+          <div class="bg-neutral-930 border-t text-xs flex-none flex items-center flex-row-reverse">
             <WorkspaceBarItem />
             <NotificationBarItem />
           </div>

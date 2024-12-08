@@ -55,7 +55,7 @@ export default function LandingPage() {
   return (
     <div class="animate-fade">
       {/* Header */}
-      <header class="flex items-center space-x-4 px-8 py-4 border-b bg-zinc-930/80 sticky top-0 backdrop-blur-xl z-50">
+      <header class="flex items-center space-x-4 px-8 py-4 border-b bg-neutral-930/80 sticky top-0 backdrop-blur-xl z-50">
         <button
           onClick={() => window.location.reload()}
           class="flex items-center space-x-2"
@@ -68,7 +68,7 @@ export default function LandingPage() {
           href="https://github.com/thirdcloud-org/thirdcloud"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-zinc-500 hover:text-white duration-150"
+          class="text-neutral-500 hover:text-white duration-150"
         >
           <BsGithub class="w-6 h-6" />
         </a>
@@ -106,7 +106,7 @@ export default function LandingPage() {
                 <span class="avoidwrap">your team</span> needs together
               </h1>
 
-              <div class="text-xl lg:text-2xl text-zinc-400">
+              <div class="text-xl lg:text-2xl text-neutral-400">
                 A space to work smarter and have fun along the way
               </div>
 
@@ -126,11 +126,11 @@ export default function LandingPage() {
         {/* Extensions Section */}
         <section class="py-16 text-center space-y-8">
           <div class="space-y-2 ">
-            <h2 class="text-4xl text-zinc-400">
+            <h2 class="text-4xl text-neutral-400">
               Extend ThirdCloud with{" "}
               <span class="text-white font-semibold">third-party apps</span>
             </h2>
-            <p class="text-zinc-400">—just like in VS Code!</p>
+            <p class="text-neutral-400">—just like in VS Code!</p>
           </div>
           <div class="lg:px-32 px-2">
             <img
@@ -148,38 +148,38 @@ export default function LandingPage() {
               <span class="avoidwrap">Do it better</span>{" "}
               <span class="avoidwrap">without breaking the bank</span>
             </h2>
-            <p class="text-zinc-500">
+            <p class="text-neutral-500">
               ThirdCloud brings your tools and data together
             </p>
           </div>
           <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="space-y-4 text-center flex flex-col items-center">
-              <div class="text-zinc-400 p-4 rounded-lg border bg-zinc-930 hover:bg-zinc-900 duration-150">
+              <div class="text-neutral-400 p-4 rounded-lg border bg-neutral-930 hover:bg-neutral-900 duration-150">
                 <Bs1SquareFill class="w-6 h-6" />
               </div>
               <div class="space-y-1">
                 <h3 class="text-xl">One Platform</h3>
-                <p class="text-zinc-500">All your tools in one place</p>
+                <p class="text-neutral-500">All your tools in one place</p>
               </div>
             </div>
             <div class="space-y-4 text-center flex flex-col items-center">
-              <div class="text-zinc-400 p-4 rounded-lg border bg-zinc-930 hover:bg-zinc-900 duration-150">
+              <div class="text-neutral-400 p-4 rounded-lg border bg-neutral-930 hover:bg-neutral-900 duration-150">
                 <BsEnvelopePaperHeartFill class="w-6 h-6" />
               </div>
               <div class="space-y-1">
                 <h3 class="text-xl">Easy Teamwork</h3>
-                <p class="text-zinc-500">
+                <p class="text-neutral-500">
                   Collaborate smoothly across divisions
                 </p>
               </div>
             </div>
             <div class="space-y-4 text-center flex flex-col items-center">
-              <div class="text-zinc-400 p-4 rounded-lg border bg-zinc-930 hover:bg-zinc-900 duration-150">
+              <div class="text-neutral-400 p-4 rounded-lg border bg-neutral-930 hover:bg-neutral-900 duration-150">
                 <BsShuffle class="w-6 h-6" />
               </div>
               <div class="space-y-1">
                 <h3 class="text-xl">Adaptable Workflows</h3>
-                <p class="text-zinc-500">
+                <p class="text-neutral-500">
                   Add third-party apps to fit the way you work
                 </p>
               </div>
@@ -192,7 +192,7 @@ export default function LandingPage() {
           <div class="space-y-8 px-4 lg:px-16 sm:space-y-0 sm:flex sm:flex-row sm:space-x-16 py-16">
             <div class="space-y-3">
               <h3 class="text-2xl font-semibold">Are you a developer?</h3>
-              <p class="text-zinc-500">
+              <p class="text-neutral-500">
                 Build a ThirdCloud app with the framework{" "}
                 <br class="hidden lg:block" />
                 you know and love!
@@ -250,13 +250,13 @@ export default function LandingPage() {
             <img src="/icon.svg" class="w-10 h-10" alt="ThirdCloud Icon" />
             <div class="space-y-1">
               <h3 class="font-semibold text-2xl">Proudly Open Source</h3>
-              <p class="text-zinc-400">
+              <p class="text-neutral-400">
                 ThirdCloud welcomes contributions and feedback.
                 <br />
                 Join us and shape the future of collaborative work!
               </p>
             </div>
-            <p class="text-xs text-zinc-400">
+            <p class="text-xs text-neutral-400">
               For any questions or support, reach out via{" "}
               <a
                 href="mailto:support@thirdcloud.org"
@@ -270,7 +270,7 @@ export default function LandingPage() {
                 href="https://github.com/thirdcloud-org/thirdcloud"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-zinc-500 hover:text-white duration-150"
+                class="text-neutral-500 hover:text-white duration-150"
               >
                 <BsGithub class="w-6 h-6" />
               </a>
