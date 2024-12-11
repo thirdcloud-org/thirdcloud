@@ -167,6 +167,11 @@ export const onUIReady = async (id: string, shadowRoot: ShadowRoot) => {
     }
   }
 
+  const content = `window.addEventListener = () => {};`;
+  const randomIdentifier = crypto.randomUUID();
+  await sandbox.createModuleSource(randomIdentifier, content, true);
+  sandbox.import(randomIdentifier);
+
   for (const script of ins.compiledResult.scripts) {
     if (script.type == "module") {
       if (script.src) {
