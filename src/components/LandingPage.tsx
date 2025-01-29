@@ -42,7 +42,9 @@ function LaunchAppButton() {
       data-[scrolled=true]:!shadow-[#6726f23b]/20 
       data-[scrolled=true]:hover:!shadow-[#6626f2]/50
       "
-      onClick={() => setLaunchApp(true)}
+      onClick={() => {
+        window.alert("App is undermaintainance");
+      }}
     >
       <div>
         Launch <span class="hidden md:inline-block"> App</span>

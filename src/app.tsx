@@ -19,6 +19,7 @@ import { installations, setInstallations } from "./components/apps";
 import { Auth } from "./components/Auth";
 import { ls_host_installations } from "./local";
 import MainApp from "./components/MainApp";
+import LandingPage from "./components/LandingPage";
 
 export default function App() {
   onMount(() => {
@@ -42,11 +43,12 @@ export default function App() {
             <Link rel="canonical" href="http://thirdcloud.org/" />
           </div>
 
-          <Suspense>
+          <LandingPage />
+          {/* <Suspense>
             <Auth>
               <MainApp {...props} />
             </Auth>
-          </Suspense>
+          </Suspense> */}
 
           <Portal>
             <Toast.Region>
